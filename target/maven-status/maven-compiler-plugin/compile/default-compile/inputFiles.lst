@@ -1,0 +1,14 @@
+E:\Code\星球项目\用户处理系统\user-center-backend\src\main\java\com\yupi\user_center\model\domain\request\UserRegisterRequest.java
+E:\Code\星球项目\用户处理系统\user-center-backend\src\main\java\com\yupi\user_center\model\domain\User.java
+E:\Code\星球项目\用户处理系统\user-center-backend\src\main\java\com\yupi\user_center\service\impl\UserServiceImpl.java
+E:\Code\星球项目\用户处理系统\user-center-backend\src\main\java\com\yupi\user_center\common\BaseResponse.java
+E:\Code\星球项目\用户处理系统\user-center-backend\src\main\java\com\yupi\user_center\controller\UserController.java
+E:\Code\星球项目\用户处理系统\user-center-backend\src\main\java\com\yupi\user_center\exception\GlobalException.java
+E:\Code\星球项目\用户处理系统\user-center-backend\src\main\java\com\yupi\user_center\model\domain\request\UserLoginRequest.java
+E:\Code\星球项目\用户处理系统\user-center-backend\src\main\java\com\yupi\user_center\contant\UserConstant.java
+E:\Code\星球项目\用户处理系统\user-center-backend\src\main\java\com\yupi\user_center\common\ResultUtils.java
+E:\Code\星球项目\用户处理系统\user-center-backend\src\main\java\com\yupi\user_center\UserCenterApplication.java
+E:\Code\星球项目\用户处理系统\user-center-backend\src\main\java\com\yupi\user_center\exception\BusinessException.java
+E:\Code\星球项目\用户处理系统\user-center-backend\src\main\java\com\yupi\user_center\common\ErrorCode.java
+E:\Code\星球项目\用户处理系统\user-center-backend\src\main\java\com\yupi\user_center\mapper\UserMapper.java
+E:\Code\星球项目\用户处理系统\user-center-backend\src\main\java\com\yupi\user_center\service\UserService.java

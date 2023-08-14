@@ -1,0 +1,14 @@
+com\yupi\user_center\exception\GlobalException.class
+com\yupi\user_center\mapper\UserMapper.class
+com\yupi\user_center\common\ErrorCode.class
+com\yupi\user_center\model\domain\request\UserRegisterRequest.class
+com\yupi\user_center\model\domain\request\UserLoginRequest.class
+com\yupi\user_center\common\BaseResponse.class
+com\yupi\user_center\UserCenterApplication.class
+com\yupi\user_center\service\UserService.class
+com\yupi\user_center\contant\UserConstant.class
+com\yupi\user_center\exception\BusinessException.class
+com\yupi\user_center\service\impl\UserServiceImpl.class
+com\yupi\user_center\controller\UserController.class
+com\yupi\user_center\common\ResultUtils.class
+com\yupi\user_center\model\domain\User.class
