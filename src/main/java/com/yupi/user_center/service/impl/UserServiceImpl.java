@@ -2,6 +2,8 @@ package com.yupi.user_center.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.yupi.user_center.common.ErrorCode;
 import com.yupi.user_center.exception.BusinessException;
 import com.yupi.user_center.model.domain.User;
@@ -10,13 +12,18 @@ import com.yupi.user_center.mapper.UserMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.DigestUtils;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.util.concurrent.locks.ReentrantLock;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import static com.yupi.user_center.contant.UserConstant.USER_LOGIN_STATE;
 
@@ -182,7 +189,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         saftyUser.setIsDelete(originUser.getIsDelete());
         saftyUser.setUserRole(originUser.getUserRole());
         saftyUser.setPlanetCode(originUser.getPlanetCode());
-
+        saftyUser.setTags(originUser.getTags());
         return saftyUser;
     }
 
@@ -196,6 +203,62 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     public int userLogout(HttpServletRequest request) {
         request.getSession().removeAttribute(USER_LOGIN_STATE);
         return 1;
+    }
+
+    /**
+     * 通过标签查询用户 （暂时不先使用这种方式）
+     *
+     * @param tagNameList 用户需要有的标签
+     * @return
+     */
+    @Deprecated
+    @Override
+    public List<User> searchUserByTagsBySQL(List<String> tagNameList) {
+        if (CollectionUtils.isEmpty(tagNameList)) {
+            // 抛出一个自定义的异常类
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
+
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        for (String tagName : tagNameList) {
+            queryWrapper = queryWrapper.like("tags", tagName);
+        }
+        List<User> userList = userMapper.selectList(queryWrapper);
+        return userList.stream().map(this::getSafetyUser).collect(Collectors.toList());
+    }
+
+    /**
+     * 使用内存方式查询 user
+     *
+     * @param tagNameList 需要有的 user
+     * @return
+     */
+    @Override
+    public List<User> searchUserByTagsByMemory(List<String> tagNameList) {
+        if (CollectionUtils.isEmpty(tagNameList)) {
+            // 抛出一个自定义的异常类
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        List<User> userList = userMapper.selectList(queryWrapper);
+        Gson gson = new Gson();
+        // 这里可以使用 stream api
+        return userList.stream().filter(user -> {
+//            if (user == null) {
+//                return false;
+//            }
+            String tagString = user.getTags();
+            Set<String> tagNameSet = gson.fromJson(tagString, new TypeToken<Set<String>>() {
+            }.getType());
+            // 可以使用 Java8 新特性进行减少圈复杂度
+            tagNameSet = Optional.ofNullable(tagNameSet).orElse(new HashSet<>());
+            for (String tagName : tagNameList) {
+                if (!tagNameSet.contains(tagName)) {
+                    return false;
+                }
+            }
+            return true;
+        }).map(this::getSafetyUser).collect(Collectors.toList());
     }
 }
 

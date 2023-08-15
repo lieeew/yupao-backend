@@ -1,10 +1,10 @@
-package generator.domain;
+package com.yupi.user_center.model.domain;
 
 import com.baomidou.mybatisplus.annotation.*;
+import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
-import lombok.Data;
 
 /**
  * 标签表
@@ -51,6 +51,7 @@ public class Tag implements Serializable {
 
     /**
      * 是否删除
+     * 必须要加上逻辑删除啊的注解 @TableLogic
      */
     @TableLogic
     private Integer isDelete;

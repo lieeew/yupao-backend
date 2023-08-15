@@ -1,13 +1,14 @@
 package com.yupi.user_center.service;
 
 import com.yupi.user_center.model.domain.User;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.util.DigestUtils;
-
 import javax.annotation.Resource;
-
+import java.util.Arrays;
+import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -17,6 +18,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * @Description
  */
 @SpringBootTest
+@Slf4j
 class UserServiceTest {
 
     @Resource
@@ -96,8 +98,25 @@ class UserServiceTest {
     }
 
     @Test
-    public void testSql() {
-
-
+    void searchUserByTags() {
+//        long startTime = System.currentTimeMillis();
+//        List<String> list = Arrays.asList("Java", "Python");
+//        List<User> userList = userService.searchUserByTagsBySQL(list);
+//        long endTime = System.currentTimeMillis();
+//        log.info("usedTime = " + (endTime - startTime));
+//        // 断言 275
+//        Assert.assertNotNull(userList);
     }
+    @Test
+    void searchUserByTagsMemory() {
+        long startTime = System.currentTimeMillis();
+        List<String> list = Arrays.asList("Java", "Python");
+        List<User> userList = userService.searchUserByTagsByMemory(list);
+        long endTime = System.currentTimeMillis();
+        log.info("usedTime = " + (endTime - startTime));
+        // 断言 295
+        Assert.assertNotNull(userList);
+    }
+
+
 }

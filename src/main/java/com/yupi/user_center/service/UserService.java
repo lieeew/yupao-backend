@@ -4,6 +4,7 @@ import com.yupi.user_center.model.domain.User;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * @author liang
@@ -42,4 +43,20 @@ public interface UserService extends IService<User> {
      * 用户注销
      */
     int userLogout(HttpServletRequest request);
+
+    /**
+     * 通过标签查询用户
+     *
+     * @param tagNameList 标签
+     * @return
+     */
+    List<User> searchUserByTagsBySQL(List<String> tagNameList);
+
+    /**
+     * 使用内存方式查询 user
+     *
+     * @param tagNameList 需要有的 user
+     * @return
+     */
+    List<User> searchUserByTagsByMemory(List<String> tagNameList);
 }
