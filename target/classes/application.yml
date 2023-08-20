@@ -6,9 +6,12 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://localhost:3306/yupi
     username: root
-    password: hsphsp
+    password: 123456
   session:
     timeout: 86400
+  mvc:
+    pathmatch:
+      matching-strategy: ANT_PATH_MATCHER
 server:
   port: 8080
   servlet:
