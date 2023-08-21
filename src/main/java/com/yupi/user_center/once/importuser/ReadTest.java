@@ -14,11 +14,13 @@ import com.alibaba.excel.read.metadata.ReadSheet;
 import com.alibaba.excel.util.ListUtils;
 import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.testng.annotations.Test;
 
 import java.io.File;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * 读的常见写法
@@ -37,8 +39,19 @@ public class ReadTest {
         String fileName = "E:\\yupao\\yupao-backend\\target\\demo.xls";
 
         // 这里 也可以不指定class，返回一个list，然后读取第一个sheet 同步读取会自动finish
-        List<XingQiuUserInfo> listMap = EasyExcel.read(fileName).sheet().doReadSync();
-        log.info("读取到数据:{}", listMap + "\n");
+        List<XingQiuUserInfo> listMap = EasyExcel.read(fileName).head(XingQiuUserInfo.class).sheet().doReadSync();
+//        System.out.println("listMap = " + listMap);
+        Map<String, List<XingQiuUserInfo>> collect =
+                listMap.stream()
+                        .filter(list -> StringUtils.isNotEmpty(list.getCollageName()))
+                        .collect(Collectors.groupingBy(XingQiuUserInfo::getCollageName));
+        System.out.println("重复的昵称：" + collect.keySet().size());
+        for (Map.Entry<String, List<XingQiuUserInfo>> entry : collect.entrySet()) {
+            // 这里就找孩子大于 1 的值
+            if (entry.getValue().size() > 1) {
+                System.out.println(entry.getKey());
+            }
+        }
     }
 
     /**
@@ -53,5 +66,6 @@ public class ReadTest {
         String fileName = "E:\\yupao\\yupao-backend\\target\\demo.xls";
         // 这里默认读取第一个sheet
         EasyExcel.read(fileName, XingQiuUserInfo.class, new XingQiuDataListener()).sheet().doRead();
+
     }
 }

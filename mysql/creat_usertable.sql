@@ -3,7 +3,7 @@ create table user
 (
     id           bigint auto_increment
         primary key,
-    username     varchar(255)                       null comment '用户昵称',
+    username     varchar(255) charset utf8mb4       null comment '用户昵称',
     userAccount  varchar(256)                       null comment '账号',
     avatarUrl    varchar(1024)                      null comment '头像',
     gender       tinyint                            null comment '性别',
@@ -16,7 +16,7 @@ create table user
     isDelete     tinyint  default 0                 null comment '是否删除',
     userRole     int      default 0                 not null comment '用户角色 0-普通会员  1-管理员',
     planetCode   varchar(512)                       null comment '星球编号',
-    tags         varchar(1024)                      null comment '用户标签 tags 列表'
+    tags         varchar(1024) charset utf8mb4      null comment '用户标签 tags 列表'
 );
 
 
