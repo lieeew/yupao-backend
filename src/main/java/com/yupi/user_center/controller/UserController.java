@@ -11,10 +11,13 @@ import com.yupi.user_center.model.domain.request.UserRegisterRequest;
 import com.yupi.user_center.service.UserService;
 import io.swagger.annotations.Api;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import static com.yupi.user_center.contant.UserConstant.ADMIN_ROLE;
 import static com.yupi.user_center.contant.UserConstant.USER_LOGIN_STATE;
@@ -27,7 +30,8 @@ import static com.yupi.user_center.contant.UserConstant.USER_LOGIN_STATE;
  */
 @RestController
 @RequestMapping("/user")
-@CrossOrigin(originPatterns = {"*"}, allowCredentials = "true")
+// 后端写跨域比较合理
+@CrossOrigin(origins = { "http://127.0.0.1:5173" })
 public class UserController {
     @Resource
     private UserService userService;
@@ -122,6 +126,15 @@ public class UserController {
         return ResultUtils.success(result);
     }
 
+    @GetMapping("/search/tags")
+    public BaseResponse<List<User>> searchUserByTags(@RequestParam(required = false) List<String> tagNameList) {
+        // 一般还是校验一下是个否为空，不然可能会欠妥当
+        if (CollectionUtils.isEmpty(tagNameList)) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
+        List<User> userList = userService.searchUserByTagsByMemory(tagNameList);
+        return ResultUtils.success(userList);
+    }
 
     /**
      * 进行鉴权，仅管理员可以查询

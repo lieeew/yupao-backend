@@ -109,14 +109,13 @@ class UserServiceTest {
     }
     @Test
     void searchUserByTagsMemory() {
-        long startTime = System.currentTimeMillis();
+//        long startTime = System.currentTimeMillis();
         List<String> list = Arrays.asList("Java", "Python");
         List<User> userList = userService.searchUserByTagsByMemory(list);
         long endTime = System.currentTimeMillis();
-        log.info("usedTime = " + (endTime - startTime));
+//        log.info("usedTime = " + (endTime - startTime));
         // 断言 295
         Assert.assertNotNull(userList);
     }
-
 
 }

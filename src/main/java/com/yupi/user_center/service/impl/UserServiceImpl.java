@@ -189,6 +189,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         saftyUser.setUserRole(originUser.getUserRole());
         saftyUser.setPlanetCode(originUser.getPlanetCode());
         saftyUser.setTags(originUser.getTags());
+        saftyUser.setProfile(originUser.getProfile());
         return saftyUser;
     }
 
@@ -243,18 +244,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         Gson gson = new Gson();
         // 这里可以使用 stream api
         return userList.stream().filter(user -> {
-//            if (user == null) {
-//                return false;
-//            }
             String tagString = user.getTags();
             Set<String> tagNameSet = gson.fromJson(tagString, new TypeToken<Set<String>>() {
             }.getType());
             // 可以使用 Java8 新特性进行减少圈复杂度
             tagNameSet = Optional.ofNullable(tagNameSet).orElse(new HashSet<>());
             for (String tagName : tagNameList) {
-                if (!tagNameSet.contains(tagName)) {
-                    return false;
-                }
+                return tagNameSet.contains(tagName);
             }
             return true;
         }).map(this::getSafetyUser).collect(Collectors.toList());
