@@ -250,7 +250,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
             // 可以使用 Java8 新特性进行减少圈复杂度
             tagNameSet = Optional.ofNullable(tagNameSet).orElse(new HashSet<>());
             for (String tagName : tagNameList) {
-                return tagNameSet.contains(tagName);
+                 if (!tagNameSet.contains(tagName)) {
+                     return false;
+                 }
             }
             return true;
         }).map(this::getSafetyUser).collect(Collectors.toList());

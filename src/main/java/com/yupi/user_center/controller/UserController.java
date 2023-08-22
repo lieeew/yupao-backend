@@ -9,16 +9,14 @@ import com.yupi.user_center.model.domain.User;
 import com.yupi.user_center.model.domain.request.UserLoginRequest;
 import com.yupi.user_center.model.domain.request.UserRegisterRequest;
 import com.yupi.user_center.service.UserService;
-import io.swagger.annotations.Api;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
+
 import static com.yupi.user_center.contant.UserConstant.ADMIN_ROLE;
 import static com.yupi.user_center.contant.UserConstant.USER_LOGIN_STATE;
 
@@ -31,7 +29,7 @@ import static com.yupi.user_center.contant.UserConstant.USER_LOGIN_STATE;
 @RestController
 @RequestMapping("/user")
 // 后端写跨域比较合理
-@CrossOrigin(origins = { "http://127.0.0.1:5173" })
+@CrossOrigin()
 public class UserController {
     @Resource
     private UserService userService;
@@ -117,6 +115,7 @@ public class UserController {
 
     /**
      * 获取用户当前的状态
+     * AF1EFC978DDA887F6563704228D6E9B4
      */
     @GetMapping("/current")
     public BaseResponse<User> getUserState(HttpServletRequest request) {
