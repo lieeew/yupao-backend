@@ -9,6 +9,7 @@ import com.yupi.user_center.model.domain.User;
 import com.yupi.user_center.model.domain.request.UserLoginRequest;
 import com.yupi.user_center.model.domain.request.UserRegisterRequest;
 import com.yupi.user_center.service.UserService;
+import io.swagger.models.auth.In;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
@@ -29,7 +30,7 @@ import static com.yupi.user_center.contant.UserConstant.USER_LOGIN_STATE;
 @RestController
 @RequestMapping("/user")
 // 后端写跨域比较合理
-@CrossOrigin()
+@CrossOrigin(origins = {"http://127.0.0.1:5173"}, allowCredentials = "true", allowedHeaders = "*")
 public class UserController {
     @Resource
     private UserService userService;
@@ -85,7 +86,7 @@ public class UserController {
 
     @GetMapping("/search")
     public BaseResponse<List<User>> searchUser(String username, HttpServletRequest request) {
-        if (!isAdmin(request)) {
+        if (!userService.isAdmin(request)) {
             // 返回一个空的集合
 //            return ResultUtils.success(new ArrayList<>());
             throw new BusinessException(ErrorCode.NO_AUTH);
@@ -103,7 +104,7 @@ public class UserController {
 
     @PostMapping("/delete")
     public BaseResponse<Boolean> deleteUser(long id, HttpServletRequest request) {
-        if (!isAdmin(request)) {
+        if (!userService.isAdmin(request)) {
             throw new BusinessException(ErrorCode.NO_AUTH);
         }
         if (id <= 0) {
@@ -135,16 +136,16 @@ public class UserController {
         return ResultUtils.success(userList);
     }
 
-    /**
-     * 进行鉴权，仅管理员可以查询
-     *
-     * @param request request 请求
-     * @return true-管理员   false-代表普通用户
-     */
-    private boolean isAdmin(HttpServletRequest request) {
-        // 进行鉴权，仅管理员可以查询
-        User user = (User) request.getSession().getAttribute(USER_LOGIN_STATE);
-        return user != null && user.getUserRole() == ADMIN_ROLE;
-    }
+    @PostMapping("/update")
+    public BaseResponse<Integer> updateUser(@RequestBody User user, HttpServletRequest request) {
+        // 校验参数是否位 null
+        if (user == null) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
+        // 校验是否有权限修改
+        User loginUser = userService.getLoginUser(request);
 
+        int updated = userService.updateUser(user, loginUser);
+        return ResultUtils.success(updated);
+    }
 }

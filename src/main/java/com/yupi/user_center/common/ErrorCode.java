@@ -32,9 +32,14 @@ public enum ErrorCode {
      */
     SAVE_FAILURE(50001, "注册账号失败", "插入数据库失败"),
     /**
+     * 请求的结果为 null
+     */
+    NULL_ERROR(50003, "请求的结果为 null", ""),
+    /**
      * 系统内部异常
      */
     SYSTEM_ERROR(50002, "系统内部异常", "");
+
     /**
      * 状态码
      */

@@ -24,9 +24,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
+import static com.yupi.user_center.contant.UserConstant.ADMIN_ROLE;
 import static com.yupi.user_center.contant.UserConstant.USER_LOGIN_STATE;
 
 /**
+ * 写道 service 里面的方法是一般可能会「服用」的代码
  * @author leikooo
  * @description 针对表【user】的数据库操作Service实现
  * @createDate 2023-07-02 16:09:52
@@ -256,6 +258,75 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
             }
             return true;
         }).map(this::getSafetyUser).collect(Collectors.toList());
+
+    }
+
+    /**
+     * 更新用户信息
+     *
+     * @param user 需要修改的用户信息
+     * @param loginUser 当前登录的用用户
+     * @return
+     */
+    @Override
+    public int updateUser(User user, User loginUser) {
+        long userId = loginUser.getId();
+        if (userId <= 0) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
+        // 进行鉴权，看看是否有权限修改用户的信息
+        if (!isAdmin(loginUser) && userId != user.getId()) {
+            throw new BusinessException(ErrorCode.NO_AUTH);
+        }
+        User oldUser = userMapper.selectById(userId);
+        if (oldUser == null) {
+            throw new BusinessException(ErrorCode.NULL_ERROR);
+        }
+        // 更新用户并返回
+        return userMapper.updateById(user);
+    }
+
+    /**
+     *获取当前登录的信息
+     *
+     * @param request
+     * @return
+     */
+    @Override
+    public User getLoginUser(HttpServletRequest request) {
+        if (request == null) {
+            return null;
+        }
+        Object userObj = request.getSession().getAttribute(USER_LOGIN_STATE);
+        if (userObj == null) {
+            throw new BusinessException(ErrorCode.NO_AUTH);
+        }
+        return (User) userObj;
+    }
+
+    /**
+     * 进行鉴权，仅管理员可以查询
+     *
+     * @param request request 请求
+     * @return true-管理员   false-代表普通用户
+     */
+    @Override
+    public boolean isAdmin(HttpServletRequest request) {
+        // 进行鉴权，仅管理员可以查询
+        User user = (User) request.getSession().getAttribute(USER_LOGIN_STATE);
+        return user != null && user.getUserRole() == ADMIN_ROLE;
+    }
+
+    /**
+     * 对健全方法进行重载
+     *
+     * @param loginUser
+     * @return
+     */
+    @Override
+    public boolean isAdmin(User loginUser) {
+        // 进行鉴权，仅管理员可以查询
+        return loginUser != null && loginUser.getUserRole() == ADMIN_ROLE;
     }
 }
 
