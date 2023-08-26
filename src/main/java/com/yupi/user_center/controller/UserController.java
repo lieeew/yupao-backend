@@ -9,7 +9,6 @@ import com.yupi.user_center.model.domain.User;
 import com.yupi.user_center.model.domain.request.UserLoginRequest;
 import com.yupi.user_center.model.domain.request.UserRegisterRequest;
 import com.yupi.user_center.service.UserService;
-import io.swagger.models.auth.In;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
@@ -17,8 +16,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import static com.yupi.user_center.contant.UserConstant.ADMIN_ROLE;
 import static com.yupi.user_center.contant.UserConstant.USER_LOGIN_STATE;
 
 /**
@@ -116,7 +113,7 @@ public class UserController {
 
     /**
      * 获取用户当前的状态
-     * AF1EFC978DDA887F6563704228D6E9B4
+     *
      */
     @GetMapping("/current")
     public BaseResponse<User> getUserState(HttpServletRequest request) {
@@ -134,6 +131,17 @@ public class UserController {
         }
         List<User> userList = userService.searchUserByTagsByMemory(tagNameList);
         return ResultUtils.success(userList);
+    }
+
+    /**
+     * 获取用户当前的状态
+     */
+    @GetMapping("/recommend")
+    public BaseResponse<List<User>> recommendUsers() {
+        // 这样全部查询之后返回是有问题的，但是先这样
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        List<User> list = userService.list(queryWrapper);
+        return ResultUtils.success(list);
     }
 
     @PostMapping("/update")

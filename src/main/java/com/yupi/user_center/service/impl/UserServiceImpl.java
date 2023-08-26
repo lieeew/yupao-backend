@@ -266,7 +266,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
      *
      * @param user 需要修改的用户信息
      * @param loginUser 当前登录的用用户
-     * @return
+     * @return 更新的条数
      */
     @Override
     public int updateUser(User user, User loginUser) {
@@ -278,6 +278,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         if (!isAdmin(loginUser) && userId != user.getId()) {
             throw new BusinessException(ErrorCode.NO_AUTH);
         }
+        // todo 如果该用户没有传入任何更新的值，那么直接报错
         User oldUser = userMapper.selectById(userId);
         if (oldUser == null) {
             throw new BusinessException(ErrorCode.NULL_ERROR);
