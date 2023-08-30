@@ -14,6 +14,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.DigestUtils;
+import org.springframework.web.bind.annotation.GetMapping;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashSet;
@@ -153,12 +155,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         }
 
         // 这里重新生成一个对象，进行返回数据
-
         User saftyUser = getSafetyUser(user);
 
         // 记录用户的登录状态
         request.getSession().setAttribute(USER_LOGIN_STATE, saftyUser);
-
         return saftyUser;
     }
 

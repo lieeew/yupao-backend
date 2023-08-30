@@ -1,6 +1,8 @@
 package com.yupi.user_center.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yupi.user_center.common.BaseResponse;
 import com.yupi.user_center.common.ErrorCode;
 import com.yupi.user_center.common.ResultUtils;
@@ -27,7 +29,7 @@ import static com.yupi.user_center.contant.UserConstant.USER_LOGIN_STATE;
 @RestController
 @RequestMapping("/user")
 // 后端写跨域比较合理
-@CrossOrigin(origins = {"http://127.0.0.1:5173"}, allowCredentials = "true", allowedHeaders = "*")
+@CrossOrigin(origins = {"http://127.0.0.1:5173/"}, allowCredentials = "true", allowedHeaders = "*")
 public class UserController {
     @Resource
     private UserService userService;
@@ -137,11 +139,12 @@ public class UserController {
      * 获取用户当前的状态
      */
     @GetMapping("/recommend")
-    public BaseResponse<List<User>> recommendUsers() {
+    public BaseResponse<IPage<User>> recommendUsers(long pageSize, long pageNum) {
         // 这样全部查询之后返回是有问题的，但是先这样
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
-        List<User> list = userService.list(queryWrapper);
-        return ResultUtils.success(list);
+        // current – 当前页   pageSize – 每页显示条数
+        IPage<User> page = userService.page(new Page<>(pageNum, pageSize), queryWrapper);
+        return ResultUtils.success(page);
     }
 
     @PostMapping("/update")
