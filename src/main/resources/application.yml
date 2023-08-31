@@ -20,10 +20,6 @@ spring:
     port: 6379
     host: localhost
     database: 0
-    password:
-    jedis.pool.max-idle: 100
-    jedis.pool.max-wait: -1ms
-    jedis.pool.min-idle: 2
 server:
   port: 8080
   servlet:
