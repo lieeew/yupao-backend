@@ -164,7 +164,7 @@ public class UserController {
             // 放入到 redis 中
             // 这里就算是放入失败也不需要报异常信息
             // redis 一定要设置过期时间
-            valueOperations.set(redisKey, userIPage, 1, TimeUnit.MINUTES);
+            valueOperations.set(redisKey, userIPage, 10, TimeUnit.MINUTES);
         } catch (Exception e) {
             log.error("redis set key error " + e);
         }
