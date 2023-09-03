@@ -27,6 +27,9 @@ server:
     session:
       cookie:
         domain: localhost
+        # 这样写就跨域写入到 session 之中了
+        same-site: none
+        secure: true
 mybatis-plus:
   configuration:
     map-underscore-to-camel-case: false

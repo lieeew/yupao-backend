@@ -9,6 +9,11 @@ import org.springframework.data.redis.core.ValueOperations;
 
 import javax.annotation.Resource;
 
+/**
+ * @author leikooo
+ *
+ *  引入新的技术是先写测试类，测试 CRUD
+ */
 @SpringBootTest
 public class RedisTest {
     @Resource
@@ -34,5 +39,6 @@ public class RedisTest {
         Assertions.assertTrue(21 == (Integer) value);
 
         System.out.println(valueOperations.get("user"));
+        redisTemplate.delete("leikooo");
     }
 }
