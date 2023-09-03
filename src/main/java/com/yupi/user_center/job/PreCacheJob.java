@@ -3,15 +3,13 @@ package com.yupi.user_center.job;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.yupi.user_center.common.ResultUtils;
 import com.yupi.user_center.model.domain.User;
 import com.yupi.user_center.service.UserService;
-import io.swagger.models.auth.In;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.scheduling.annotation.Scheduled;
-
+import org.springframework.stereotype.Component;
 import javax.annotation.Resource;
 import java.util.Arrays;
 import java.util.List;
@@ -23,6 +21,8 @@ import java.util.concurrent.TimeUnit;
  * @Package com.yupi.user_center.job
  * @Description
  */
+// 没有注入到容器里面，执行了就见鬼了🤣
+@Component
 @Slf4j
 public class PreCacheJob {
     @Resource
@@ -32,7 +32,7 @@ public class PreCacheJob {
     private RedisTemplate<String, Object> redisTemplate;
 
     private List<Long> vipUser = Arrays.asList(1L, 2L, 3L);
-    @Scheduled(cron = "0 */1 * * * ?")
+    @Scheduled(cron = "0 0 0 ? * *")
     public void doRecommendUser() {
         log.info("定时任务开始执行");
         for (Long id : vipUser) {
@@ -48,11 +48,10 @@ public class PreCacheJob {
                 // 放入到 redis 中
                 // 这里就算是放入失败也不需要报异常信息
                 // redis 一定要设置过期时间
-                valueOperations.set(redisKey, userIPage, 1, TimeUnit.MINUTES);
+                valueOperations.set(redisKey, userIPage, 10, TimeUnit.MINUTES);
             } catch (Exception e) {
                 log.error("redis set key error " + e);
             }
         }
     }
-
 }

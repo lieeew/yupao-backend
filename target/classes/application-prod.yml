@@ -6,7 +6,7 @@ spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
     url: 'jdbc:mysql://sh-cynosdbmysql-grp-622vdsnq.sql.tencentcdb.com:25615/user_center'
-    username: XXXXX
+    username: kkk
     password: XXXXX
   session:
     timeout: 86400 #这个单位是分钟
