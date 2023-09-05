@@ -20,6 +20,7 @@ spring:
     port: 6379
     host: localhost
     database: 0
+    redisson-database: 3
 server:
   port: 8080
   servlet:

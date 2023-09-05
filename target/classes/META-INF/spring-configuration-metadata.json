@@ -1,0 +1,29 @@
+{
+  "groups": [
+    {
+      "name": "spring.redis",
+      "type": "com.yupi.user_center.config.RedissonConfig",
+      "sourceType": "com.yupi.user_center.config.RedissonConfig"
+    }
+  ],
+  "properties": [
+    {
+      "name": "spring.redis.host",
+      "type": "java.lang.String",
+      "description": "主机",
+      "sourceType": "com.yupi.user_center.config.RedissonConfig"
+    },
+    {
+      "name": "spring.redis.port",
+      "type": "java.lang.String",
+      "description": "端口",
+      "sourceType": "com.yupi.user_center.config.RedissonConfig"
+    },
+    {
+      "name": "spring.redis.redisson-database",
+      "type": "java.lang.String",
+      "sourceType": "com.yupi.user_center.config.RedissonConfig"
+    }
+  ],
+  "hints": []
+}
