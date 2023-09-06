@@ -24,5 +24,4 @@ public interface UserConstant {
      * 普通用户
      */
     int NORMAL_ROLE = 0;
-
 }

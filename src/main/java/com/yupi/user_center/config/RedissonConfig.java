@@ -7,7 +7,6 @@ import org.redisson.config.Config;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import java.io.IOException;
 
 /**
  * @author leikooo
@@ -30,6 +29,9 @@ public class RedissonConfig {
      */
     private String host;
 
+    /**
+     * redisson 需要的 redis 库
+     */
     private String redissonDatabase;
     @Bean
     public RedissonClient redissonClient() {

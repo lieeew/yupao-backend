@@ -8,8 +8,8 @@ import com.yupi.user_center.common.ErrorCode;
 import com.yupi.user_center.common.ResultUtils;
 import com.yupi.user_center.exception.BusinessException;
 import com.yupi.user_center.model.domain.User;
-import com.yupi.user_center.model.domain.request.UserLoginRequest;
-import com.yupi.user_center.model.domain.request.UserRegisterRequest;
+import com.yupi.user_center.model.request.UserLoginRequest;
+import com.yupi.user_center.model.request.UserRegisterRequest;
 import com.yupi.user_center.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -23,7 +23,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
-import static com.yupi.user_center.contant.UserConstant.USER_LOGIN_STATE;
 
 /**
  * @author leikooo
