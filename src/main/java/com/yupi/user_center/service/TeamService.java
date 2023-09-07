@@ -2,6 +2,7 @@ package com.yupi.user_center.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.yupi.user_center.model.domain.Team;
+import com.yupi.user_center.model.domain.User;
 
 /**
 * @author liang
@@ -10,4 +11,12 @@ import com.yupi.user_center.model.domain.Team;
 */
 public interface TeamService extends IService<Team> {
 
+    /**
+     * 创建队伍表
+     *
+     * @param team team 对象
+     * @param loginUser 当前登录地用户
+     * @return
+     */
+    long addTeam(Team team, User loginUser);
 }

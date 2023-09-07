@@ -14,7 +14,8 @@ import java.io.Serializable;
 @Data
 public class PageRequest implements Serializable {
 
-    private static final long serialVersionUID = -5860707094194210842L;
+    private static final long serialVersionUID = -7354124501767087987L;
+
 
     /**
      * 页面大小
