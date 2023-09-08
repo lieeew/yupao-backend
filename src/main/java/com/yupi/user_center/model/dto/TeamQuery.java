@@ -17,7 +17,6 @@ import lombok.EqualsAndHashCode;
  * 2） 有一些参数使用不到，可以降低理解成本
  * 3) 多个对象映射到类里面
  */
-@Data
 @EqualsAndHashCode(callSuper = true)
 public class TeamQuery extends PageRequest {
     /**
@@ -51,4 +50,51 @@ public class TeamQuery extends PageRequest {
      */
     private Integer status;
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Integer getMaxNum() {
+        return maxNum;
+    }
+
+    public void setMaxNum(Integer maxNum) {
+        this.maxNum = maxNum;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
 }

@@ -9,11 +9,11 @@ import com.yupi.user_center.exception.BusinessException;
 import com.yupi.user_center.model.domain.Team;
 import com.yupi.user_center.model.domain.User;
 import com.yupi.user_center.model.dto.TeamQuery;
+import com.yupi.user_center.model.request.TeamAddRequest;
 import com.yupi.user_center.service.TeamService;
 import com.yupi.user_center.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.beanutils.BeanUtils;
-import org.springframework.http.HttpRequest;
 import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -38,11 +38,17 @@ public class TeamController {
     private UserService userService;
 
     @PostMapping("/add")
-    public BaseResponse<Long> addTeam(@RequestBody TeamAddRequest team, HttpServletRequest httpServletRequest) {
-        if (team == null) {
+    public BaseResponse<Long> addTeam(@RequestBody TeamAddRequest teamAddRequest, HttpServletRequest httpServletRequest) {
+        if (teamAddRequest == null) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "请求参数为 null");
         }
         User loginUser = userService.getLoginUser(httpServletRequest);
+        Team team = new Team();
+        try {
+            BeanUtils.copyProperties(team, teamAddRequest);
+        } catch (Exception e) {
+            throw new BusinessException(ErrorCode.SYSTEM_ERROR);
+        }
         long teamId = teamService.addTeam(team, loginUser);
         return ResultUtils.success(teamId);
     }
