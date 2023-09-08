@@ -1,5 +1,8 @@
 package com.yupi.user_center.model.request;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -11,6 +14,11 @@ import java.util.Date;
  */
 public class TeamAddRequest implements Serializable {
     private static final long serialVersionUID = 6904789433941961066L;
+    /**
+     * id
+     */
+    @TableId(type = IdType.AUTO)
+    private Long id;
 
     /**
      * 队伍名称
@@ -101,5 +109,13 @@ public class TeamAddRequest implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

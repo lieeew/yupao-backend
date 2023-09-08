@@ -1,23 +1,9 @@
 package com.yupi.user_center.once.importuser;
 
 import com.alibaba.excel.EasyExcel;
-import com.alibaba.excel.ExcelReader;
 import com.alibaba.excel.annotation.ExcelProperty;
-import com.alibaba.excel.annotation.format.DateTimeFormat;
-import com.alibaba.excel.annotation.format.NumberFormat;
-import com.alibaba.excel.context.AnalysisContext;
-import com.alibaba.excel.converters.DefaultConverterLoader;
-import com.alibaba.excel.enums.CellExtraTypeEnum;
-import com.alibaba.excel.read.listener.PageReadListener;
-import com.alibaba.excel.read.listener.ReadListener;
-import com.alibaba.excel.read.metadata.ReadSheet;
-import com.alibaba.excel.util.ListUtils;
-import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.testng.annotations.Test;
-
-import java.io.File;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -34,7 +20,7 @@ public class ReadTest {
     /**
      * 同步的返回，不推荐使用，如果数据量大会把数据放到内存里面, 一次要获得完整的数据
      */
-    @Test
+//    @Test
     public void synchronousRead() {
         String fileName = "E:\\yupao\\yupao-backend\\target\\demo.xls";
 
@@ -61,7 +47,7 @@ public class ReadTest {
      * <p>2. 由于默认一行行的读取excel，所以需要创建excel一行一行的回调监听器
      * <p>3. 直接读即可
      */
-    @Test
+//    @Test
     public void indexOrNameRead() {
         String fileName = "E:\\yupao\\yupao-backend\\target\\demo.xls";
         // 这里默认读取第一个sheet

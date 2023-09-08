@@ -8,14 +8,18 @@ import com.yupi.user_center.mapper.TeamMapper;
 import com.yupi.user_center.model.domain.Team;
 import com.yupi.user_center.model.domain.User;
 import com.yupi.user_center.model.domain.UserTeam;
+import com.yupi.user_center.model.dto.TeamQuery;
 import com.yupi.user_center.model.enums.TeamStatusEnum;
+import com.yupi.user_center.model.vo.TeamUserVO;
 import com.yupi.user_center.service.TeamService;
 import com.yupi.user_center.service.UserTeamService;
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.Resource;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -40,7 +44,7 @@ public class TeamServiceImpl extends ServiceImpl<TeamMapper, Team>
     // 实现事务
     @Transactional(rollbackFor = Exception.class)
     public long addTeam(Team team, User loginUser) {
-        if (team == null) {
+         if (team == null) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "请求的参数为 null");
         }
         if (loginUser == null) {
@@ -92,9 +96,8 @@ public class TeamServiceImpl extends ServiceImpl<TeamMapper, Team>
         }
         // 插入用户 => 队伍关系表
         UserTeam userTeam = new UserTeam();
-        userTeam.setId(teamId);
+        userTeam.setTeamId(teamId);
         userTeam.setUserId(userId);
-        userTeam.setTeamId(team.getId());
         userTeam.setJoinTime(new Date());
 
         save = userTeamService.save(userTeam);
@@ -102,6 +105,19 @@ public class TeamServiceImpl extends ServiceImpl<TeamMapper, Team>
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "保存队伍信息失败");
         }
         return teamId;
+    }
+
+    @Override
+    public List<TeamUserVO> listTeams(TeamQuery teamQuery) {
+        QueryWrapper<Team> queryWrapper = new QueryWrapper<>();
+        Team team = new Team();
+        try {
+            BeanUtils.copyProperties(team, teamQuery);
+        } catch (Exception e) {
+            throw new BusinessException(ErrorCode.SYSTEM_ERROR);
+        }
+
+        return null;
     }
 }
 

@@ -1,8 +1,13 @@
 package com.yupi.user_center.service;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.yupi.user_center.model.domain.Team;
 import com.yupi.user_center.model.domain.User;
+import com.yupi.user_center.model.dto.TeamQuery;
+import com.yupi.user_center.model.vo.TeamUserVO;
+
+import java.util.List;
 
 /**
 * @author liang
@@ -19,4 +24,12 @@ public interface TeamService extends IService<Team> {
      * @return
      */
     long addTeam(Team team, User loginUser);
+
+    /**
+     * 查询
+     *
+     * @param teamQuery
+     * @return
+     */
+    List<TeamUserVO> listTeams(TeamQuery teamQuery);
 }

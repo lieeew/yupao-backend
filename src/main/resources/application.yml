@@ -6,7 +6,7 @@ spring:
     # DataSource Config
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/yupi
+    url: jdbc:mysql://localhost:3306/yupi?serverTimezone=Asia/Shanghai
     username: root
     password: hsphsp
   session:

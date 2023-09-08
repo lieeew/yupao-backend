@@ -4,7 +4,70 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8d5d19e5-9b8a-47f1-9cd9-10808b60d6a4" name="Changes" comment="leikooo" />
+    <list default="true" id="8d5d19e5-9b8a-47f1-9cd9-10808b60d6a4" name="Changes" comment="leikooo">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/yupi/user_center/model/vo/TeamUserVO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/yupi/user_center/model/vo/UserVO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mysql/creat_usertable.sql" beforeDir="false" afterPath="$PROJECT_DIR$/mysql/creat_usertable.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/yupi/user_center/controller/TeamController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/yupi/user_center/controller/TeamController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/yupi/user_center/model/request/TeamAddRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/yupi/user_center/model/request/TeamAddRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/yupi/user_center/once/importuser/ImportExcel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/yupi/user_center/once/importuser/ImportExcel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/yupi/user_center/once/importuser/ReadTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/yupi/user_center/once/importuser/ReadTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/yupi/user_center/service/TeamService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/yupi/user_center/service/TeamService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/yupi/user_center/service/impl/TeamServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/yupi/user_center/service/impl/TeamServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/META-INF/spring-configuration-metadata.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/application-prod.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/application.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yupi/user_center/UserCenterApplication.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yupi/user_center/common/BaseResponse.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yupi/user_center/common/ErrorCode.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yupi/user_center/common/PageRequest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yupi/user_center/common/ResultUtils.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yupi/user_center/config/HttpSessionConfig.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yupi/user_center/config/Knife4jConfiguration.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yupi/user_center/config/MybatisPlusConfig.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yupi/user_center/config/RedisTemplateConfig.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yupi/user_center/config/RedissonConfig.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yupi/user_center/contant/UserConstant.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yupi/user_center/controller/TeamController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yupi/user_center/controller/UserController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yupi/user_center/exception/BusinessException.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yupi/user_center/exception/GlobalException.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yupi/user_center/job/PreCacheJob.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yupi/user_center/mapper/TagMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yupi/user_center/mapper/TeamMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yupi/user_center/mapper/UserMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yupi/user_center/mapper/UserTeamMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yupi/user_center/model/domain/Tag.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yupi/user_center/model/domain/Team.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yupi/user_center/model/domain/User.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yupi/user_center/model/domain/UserTeam.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yupi/user_center/model/dto/TeamQuery.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yupi/user_center/model/enums/TeamStatusEnum.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yupi/user_center/model/request/TeamAddRequest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yupi/user_center/model/request/UserLoginRequest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yupi/user_center/model/request/UserRegisterRequest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yupi/user_center/once/InsertUsers.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yupi/user_center/once/importuser/ImportExcel.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yupi/user_center/once/importuser/ReadTest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yupi/user_center/once/importuser/XingQiuDataListener.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yupi/user_center/once/importuser/XingQiuUserInfo.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yupi/user_center/service/TeamService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yupi/user_center/service/UserService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yupi/user_center/service/UserTeamService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yupi/user_center/service/impl/TeamServiceImpl.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yupi/user_center/service/impl/UserServiceImpl$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yupi/user_center/service/impl/UserServiceImpl.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/yupi/user_center/service/impl/UserTeamServiceImpl.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/yupi/user_center/service/InsertUserTest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/yupi/user_center/service/ListNodeTest$ListNode.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/yupi/user_center/service/ListNodeTest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/yupi/user_center/service/RedisTest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/yupi/user_center/service/RedissonTest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/yupi/user_center/service/UserServiceTest.class" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -77,8 +140,8 @@
     "RequestMappingsPanelOrder1": "1",
     "RequestMappingsPanelWidth0": "75",
     "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
     "git-widget-placeholder": "main",
     "ignore.virus.scanning.warn.message": "true",
@@ -88,7 +151,10 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "org.jetbrains.plugins.github.ui.GithubSettingsConfigurable",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
     "spring.configuration.checksum": "7a2f53b42c94f6674e952313500d6ca9",
     "vue.rearranger.settings.migration": "true"
   },
@@ -111,11 +177,11 @@
       <recent name="E:\yupao\yupao-backend\mysql" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.yupi.user_center.model.vo" />
       <recent name="com.yupi.user_center.controller" />
       <recent name="com.yupi.user_center.mapper" />
       <recent name="com.yupi.user_center.model.domain" />
       <recent name="com.yupi.user_center.service" />
-      <recent name="com.yupi.user_center.service.impl" />
     </key>
   </component>
   <component name="RunManager" selected="Spring Boot.UserCenterApplication">
@@ -205,15 +271,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <recent_temporary>
-      <list>
-        <item itemvalue="JUnit.RedissonTest.test" />
-        <item itemvalue="JUnit.RedissonTest.testWatchDog" />
-        <item itemvalue="JUnit.RedisTest.test" />
-        <item itemvalue="JUnit.RedisTest" />
-        <item itemvalue="JUnit.InsertUserTest.doConcurrencyInsert" />
-      </list>
-    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -287,6 +344,9 @@
       <workItem from="1694135587411" duration="912000" />
       <workItem from="1694151488348" duration="54000" />
       <workItem from="1694151550706" duration="1938000" />
+      <workItem from="1694153567337" duration="5000" />
+      <workItem from="1694153884223" duration="4875000" />
+      <workItem from="1694168841569" duration="5380000" />
     </task>
     <task id="LOCAL-00001" summary="leikooo">
       <created>1694153333987</created>
@@ -338,5 +398,9 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="leikooo" />
     <option name="LAST_COMMIT_MESSAGE" value="leikooo" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>

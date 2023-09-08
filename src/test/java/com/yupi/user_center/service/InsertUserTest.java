@@ -1,11 +1,9 @@
 package com.yupi.user_center.service;
 
-import com.yupi.user_center.mapper.UserMapper;
 import com.yupi.user_center.model.domain.User;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.util.StopWatch;
-
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -42,8 +40,8 @@ public class InsertUserTest {
         Collection<User> users = new ArrayList<>();
         for (int i = 0; i < INSERT_NUM; i++) {
             User user = new User();
-            user.setUsername("fakeLieeew");
-            user.setUserAccount("fakeLieeew");
+            user.setUsername("fakeLeikooo");
+            user.setUserAccount("fakeLeikooo");
             user.setAvatarUrl("https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png");
             user.setGender(0);
             user.setUserPassword("");
@@ -74,8 +72,8 @@ public class InsertUserTest {
             while (true) {
                 j++;
                 User user = new User();
-                user.setUsername("fakeLieeew");
-                user.setUserAccount("fakeLieeew");
+                user.setUsername("fakeLeikooo");
+                user.setUserAccount("fakeLeikooo");
                 user.setAvatarUrl("https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png");
                 user.setGender(0);
                 user.setUserPassword("");
