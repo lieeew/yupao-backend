@@ -8,6 +8,7 @@ import java.util.Date;
 
 /**
  * 队伍
+ * @author leikooo
  * @TableName team
  */
 @TableName(value ="team")

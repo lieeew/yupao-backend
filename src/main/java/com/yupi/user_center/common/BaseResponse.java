@@ -8,7 +8,6 @@ import lombok.Data;
  * @Package com.yupi.user_center.common
  * @Description 通用返回类
  */
-@Data
 public class BaseResponse<T> {
     /**
      * 业务代码
@@ -55,5 +54,35 @@ public class BaseResponse<T> {
         this(errorCode.getCode(), data);
     }
 
+    public int getCode() {
+        return code;
+    }
 
+    public void setCode(int code) {
+        this.code = code;
+    }
+
+    public T getData() {
+        return data;
+    }
+
+    public void setData(T data) {
+        this.data = data;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 }

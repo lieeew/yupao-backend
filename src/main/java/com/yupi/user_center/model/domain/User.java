@@ -4,13 +4,14 @@ import com.baomidou.mybatisplus.annotation.*;
 
 import java.io.Serializable;
 import java.util.Date;
+
 import lombok.Data;
 
 /**
- * 
+ * @author leikooo
  * @TableName user
  */
-@TableName(value ="user")
+@TableName(value = "user")
 public class User implements Serializable {
     /**
      *

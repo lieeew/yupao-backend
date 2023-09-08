@@ -1,7 +1,5 @@
 package com.yupi.user_center.model.request;
 
-import lombok.Data;
-
 import java.io.Serializable;
 
 /**

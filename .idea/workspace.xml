@@ -1,0 +1,342 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="8d5d19e5-9b8a-47f1-9cd9-10808b60d6a4" name="Changes" comment="leikooo" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Enum" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;history&quot;: [
+    {
+      &quot;state&quot;: &quot;OPEN&quot;,
+      &quot;author&quot;: &quot;lieeew&quot;
+    }
+  ],
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;author&quot;: &quot;lieeew&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="selectedUrlAndAccountId">
+      <UrlAndAccount>
+        <option name="accountId" value="6db0eff6-1905-45a8-bd12-62a016561660" />
+        <option name="url" value="https://github.com/lieeew/yupao-backend.git" />
+      </UrlAndAccount>
+    </option>
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="jar://D:/Java_Moven/.m2/repository/commons-beanutils/commons-beanutils/1.9.4/commons-beanutils-1.9.4-sources.jar!/org/apache/commons/beanutils/BeanUtils.java" root0="SKIP_INSPECTION" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="localRepository" value="D:\Java_Moven\.m2\repository" />
+        <option name="mavenHome" value="D:/Program Files (x86)/apache-maven-3.9.2" />
+        <option name="useMavenConfig" value="true" />
+        <option name="userSettingsFile" value="D:\Program Files (x86)\apache-maven-3.9.2\conf\settings.xml" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="MavenRunner">
+    <option name="skipTests" value="true" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectId" id="2TxditBuRMxfX5q68iADgNnzCNW" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;E:/yupao/yupao-backend/src/main/java/com/yupi/user_center/service&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;spring.configuration.checksum&quot;: &quot;7a2f53b42c94f6674e952313500d6ca9&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  },
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;mysql&quot;
+    ],
+    &quot;com.intellij.ide.scratch.LRUPopupBuilder$1/SQL Dialect&quot;: [
+      &quot;MySQL&quot;
+    ]
+  }
+}</component>
+  <component name="ReactorSettings">
+    <option name="notificationShown" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\yupao\yupao-backend\src\main\java\com\yupi\user_center\service" />
+      <recent name="E:\yupao\yupao-backend\target" />
+      <recent name="E:\yupao\yupao-backend\mysql" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.yupi.user_center.controller" />
+      <recent name="com.yupi.user_center.mapper" />
+      <recent name="com.yupi.user_center.model.domain" />
+      <recent name="com.yupi.user_center.service" />
+      <recent name="com.yupi.user_center.service.impl" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Spring Boot.UserCenterApplication">
+    <configuration name="InsertUserTest.doConcurrencyInsert" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="yupao-backend" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.yupi.user_center.service.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.yupi.user_center.service" />
+      <option name="MAIN_CLASS_NAME" value="com.yupi.user_center.service.InsertUserTest" />
+      <option name="METHOD_NAME" value="doConcurrencyInsert" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="RedisTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="yupao-backend" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.yupi.user_center.service.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.yupi.user_center.service" />
+      <option name="MAIN_CLASS_NAME" value="com.yupi.user_center.service.RedisTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="RedisTest.test" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="yupao-backend" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.yupi.user_center.service.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.yupi.user_center.service" />
+      <option name="MAIN_CLASS_NAME" value="com.yupi.user_center.service.RedisTest" />
+      <option name="METHOD_NAME" value="test" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="RedissonTest.test" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="yupao-backend" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.yupi.user_center.service.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.yupi.user_center.service" />
+      <option name="MAIN_CLASS_NAME" value="com.yupi.user_center.service.RedissonTest" />
+      <option name="METHOD_NAME" value="test" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="RedissonTest.testWatchDog" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="yupao-backend" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.yupi.user_center.service.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.yupi.user_center.service" />
+      <option name="MAIN_CLASS_NAME" value="com.yupi.user_center.service.RedissonTest" />
+      <option name="METHOD_NAME" value="testWatchDog" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="UserCenterApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="yupao-backend" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.yupi.user_center.UserCenterApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.RedissonTest.test" />
+        <item itemvalue="JUnit.RedissonTest.testWatchDog" />
+        <item itemvalue="JUnit.RedisTest.test" />
+        <item itemvalue="JUnit.RedisTest" />
+        <item itemvalue="JUnit.InsertUserTest.doConcurrencyInsert" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="8d5d19e5-9b8a-47f1-9cd9-10808b60d6a4" name="Changes" comment="" />
+      <created>1691988797211</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1691988797211</updated>
+      <workItem from="1691988798904" duration="47000" />
+      <workItem from="1692004649692" duration="1414000" />
+      <workItem from="1692006687694" duration="3031000" />
+      <workItem from="1692074347023" duration="895000" />
+      <workItem from="1692075252475" duration="68000" />
+      <workItem from="1692075327249" duration="181000" />
+      <workItem from="1692075534199" duration="1157000" />
+      <workItem from="1692076702677" duration="4810000" />
+      <workItem from="1692260724601" duration="49000" />
+      <workItem from="1692323918453" duration="19000" />
+      <workItem from="1692420377276" duration="8568000" />
+      <workItem from="1692437372226" duration="994000" />
+      <workItem from="1692438804600" duration="474000" />
+      <workItem from="1692440760518" duration="1168000" />
+      <workItem from="1692445018380" duration="4114000" />
+      <workItem from="1692490574622" duration="3382000" />
+      <workItem from="1692529984583" duration="634000" />
+      <workItem from="1692587570987" duration="7107000" />
+      <workItem from="1692603696234" duration="53000" />
+      <workItem from="1692604754399" duration="4182000" />
+      <workItem from="1692621862399" duration="4990000" />
+      <workItem from="1692628085226" duration="1001000" />
+      <workItem from="1692666575145" duration="9421000" />
+      <workItem from="1692700100538" duration="17000" />
+      <workItem from="1692752399969" duration="6571000" />
+      <workItem from="1692761532389" duration="1357000" />
+      <workItem from="1692782269498" duration="5874000" />
+      <workItem from="1692797015889" duration="724000" />
+      <workItem from="1692798296759" duration="917000" />
+      <workItem from="1693042128011" duration="5652000" />
+      <workItem from="1693128464469" duration="39000" />
+      <workItem from="1693192659916" duration="6000" />
+      <workItem from="1693305258883" duration="6016000" />
+      <workItem from="1693358057235" duration="5914000" />
+      <workItem from="1693365038188" duration="344000" />
+      <workItem from="1693375415446" duration="4947000" />
+      <workItem from="1693395502484" duration="1100000" />
+      <workItem from="1693400030714" duration="1831000" />
+      <workItem from="1693406320869" duration="805000" />
+      <workItem from="1693447194322" duration="881000" />
+      <workItem from="1693470587798" duration="6510000" />
+      <workItem from="1693494284398" duration="3655000" />
+      <workItem from="1693552006252" duration="2986000" />
+      <workItem from="1693621272227" duration="32000" />
+      <workItem from="1693636519240" duration="9227000" />
+      <workItem from="1693655899682" duration="3106000" />
+      <workItem from="1693663564975" duration="1729000" />
+      <workItem from="1693710801149" duration="3290000" />
+      <workItem from="1693729999441" duration="4293000" />
+      <workItem from="1693874192943" duration="4064000" />
+      <workItem from="1693879446805" duration="447000" />
+      <workItem from="1693884875922" duration="317000" />
+      <workItem from="1693892331636" duration="2349000" />
+      <workItem from="1693898130712" duration="119000" />
+      <workItem from="1693913671865" duration="839000" />
+      <workItem from="1693914525877" duration="1145000" />
+      <workItem from="1693921972337" duration="455000" />
+      <workItem from="1693990938437" duration="10106000" />
+      <workItem from="1694042031451" duration="1462000" />
+      <workItem from="1694054188675" duration="27000" />
+      <workItem from="1694075715226" duration="12351000" />
+      <workItem from="1694135587411" duration="912000" />
+      <workItem from="1694151488348" duration="54000" />
+      <workItem from="1694151550706" duration="1791000" />
+    </task>
+    <task id="LOCAL-00001" summary="leikooo">
+      <created>1694153333987</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1694153333987</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.History.Properties">
+    <option name="COLUMN_ID_ORDER">
+      <list>
+        <option value="Default.Root" />
+        <option value="Default.Author" />
+        <option value="Default.Date" />
+        <option value="Default.Subject" />
+        <option value="Space.CommitStatus" />
+      </list>
+    </option>
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="main" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="leikooo" />
+    <option name="LAST_COMMIT_MESSAGE" value="leikooo" />
+  </component>
+</project>

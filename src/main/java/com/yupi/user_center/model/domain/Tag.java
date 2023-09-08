@@ -8,6 +8,7 @@ import java.util.Date;
 
 /**
  * 标签表
+ * @author leikooo
  * @TableName tag
  */
 @TableName(value ="tag")

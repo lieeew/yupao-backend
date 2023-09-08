@@ -1,8 +1,5 @@
 package com.yupi.user_center.common;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import lombok.Data;
-
 import java.io.Serializable;
 
 /**
@@ -11,7 +8,6 @@ import java.io.Serializable;
  * @Package com.yupi.user_center.model.dto
  * @Description
  */
-@Data
 public class PageRequest implements Serializable {
 
     private static final long serialVersionUID = -7354124501767087987L;
@@ -26,4 +22,20 @@ public class PageRequest implements Serializable {
      * 当前是第几页
      */
     protected int pageNum = 1;
+
+    public int getPageSize() {
+        return pageSize;
+    }
+
+    public void setPageSize(int pageSize) {
+        this.pageSize = pageSize;
+    }
+
+    public int getPageNum() {
+        return pageNum;
+    }
+
+    public void setPageNum(int pageNum) {
+        this.pageNum = pageNum;
+    }
 }

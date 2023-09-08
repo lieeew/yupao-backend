@@ -3,7 +3,6 @@ package com.yupi.user_center.model.dto;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.yupi.user_center.common.PageRequest;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
@@ -11,7 +10,6 @@ import lombok.EqualsAndHashCode;
  * @create 2023-09-06 21:06
  * @Package com.yupi.user_center.model.dto
  * @Description dto
- *
  * 为什么需要新的类？
  * 1） 请求参数名称和实体类不一致
  * 2） 有一些参数使用不到，可以降低理解成本
