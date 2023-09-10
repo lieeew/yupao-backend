@@ -872,7 +872,7 @@ sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
       <UnderlyingIndexName>uniIndex_tagName</UnderlyingIndexName>
     </key>
     <column id="254" parent="238" name="id">
-      <AutoIncrement>29</AutoIncrement>
+      <AutoIncrement>38</AutoIncrement>
       <Comment>id</Comment>
       <DasType>bigint(20)|0s</DasType>
       <NotNull>1</NotNull>
@@ -1050,7 +1050,7 @@ sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
     <column id="285" parent="240" name="id">
-      <AutoIncrement>79</AutoIncrement>
+      <AutoIncrement>85</AutoIncrement>
       <Comment>id</Comment>
       <DasType>bigint(20)|0s</DasType>
       <NotNull>1</NotNull>

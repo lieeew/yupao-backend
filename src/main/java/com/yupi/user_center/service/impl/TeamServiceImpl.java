@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.yupi.user_center.common.ErrorCode;
 import com.yupi.user_center.exception.BusinessException;
+import com.yupi.user_center.mapper.ListTeamUserMapper;
 import com.yupi.user_center.mapper.TeamMapper;
 import com.yupi.user_center.model.domain.Team;
 import com.yupi.user_center.model.domain.User;
@@ -11,16 +12,23 @@ import com.yupi.user_center.model.domain.UserTeam;
 import com.yupi.user_center.model.dto.TeamQuery;
 import com.yupi.user_center.model.enums.TeamStatusEnum;
 import com.yupi.user_center.model.vo.TeamUserVO;
+import com.yupi.user_center.model.vo.UserVO;
 import com.yupi.user_center.service.TeamService;
+import com.yupi.user_center.service.UserService;
 import com.yupi.user_center.service.UserTeamService;
+import jodd.util.ArraysUtil;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.ibatis.jdbc.SqlRunner;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
+
 import javax.annotation.Resource;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.lang.reflect.InvocationTargetException;
+import java.sql.SQLException;
+import java.util.*;
 
 /**
  * @author liang
@@ -28,10 +36,15 @@ import java.util.Optional;
  * @createDate 2023-09-06 17:24:50
  */
 @Service
-public class TeamServiceImpl extends ServiceImpl<TeamMapper, Team>
-        implements TeamService {
+public class TeamServiceImpl extends ServiceImpl<TeamMapper, Team> implements TeamService {
     @Resource
     private UserTeamService userTeamService;
+
+    @Resource
+    private UserService userService;
+
+    @Resource
+    private ListTeamUserMapper listTeamUserMapper;
 
     /**
      * 创建队伍表
@@ -44,7 +57,7 @@ public class TeamServiceImpl extends ServiceImpl<TeamMapper, Team>
     // 实现事务
     @Transactional(rollbackFor = Exception.class)
     public long addTeam(Team team, User loginUser) {
-         if (team == null) {
+        if (team == null) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "请求的参数为 null");
         }
         if (loginUser == null) {
@@ -107,8 +120,15 @@ public class TeamServiceImpl extends ServiceImpl<TeamMapper, Team>
         return teamId;
     }
 
+    /**
+     * 查询用队伍
+     *
+     * @param teamQuery
+     * @param loginUser
+     * @return
+     */
     @Override
-    public List<TeamUserVO> listTeams(TeamQuery teamQuery) {
+    public List<TeamUserVO> listTeams(TeamQuery teamQuery, User loginUser) {
         QueryWrapper<Team> queryWrapper = new QueryWrapper<>();
         Team team = new Team();
         try {
@@ -116,8 +136,77 @@ public class TeamServiceImpl extends ServiceImpl<TeamMapper, Team>
         } catch (Exception e) {
             throw new BusinessException(ErrorCode.SYSTEM_ERROR);
         }
+        if (teamQuery != null) {
+            // 根据队伍 id 进行查询
+            Long id = teamQuery.getId();
+            if (id != null && id > 0) {
+                queryWrapper.eq("id", id);
+            }
+            // 同时收缩 名称 + 描述
+            String searchText = teamQuery.getSearchText();
+            if (StringUtils.isNoneBlank(searchText)) {
+                // 使用 or 查询写法
+                queryWrapper.or(qw -> (qw.like("name", searchText)).or().like("description", searchText));
+            }
+            // 根据队名称进行查询
+            String name = teamQuery.getName();
+            if (StringUtils.isNoneBlank(name)) {
+                queryWrapper.like("name", name);
+            }
+            // 只是根据描述进行查询
+            String description = teamQuery.getDescription();
+            if (StringUtils.isNoneBlank(description)) {
+                queryWrapper.like("description", description);
+            }
+            // 根据最大人数进行查询
+            Integer maxNum = teamQuery.getMaxNum();
+            if (maxNum != null && maxNum > 0) {
+                queryWrapper.eq("maxNum", maxNum);
+            }
+            // 根据用户 id 进行查询
+            Long userId = teamQuery.getUserId();
+            if (userId != null && userId > 0) {
+                queryWrapper.eq("userId", userId);
+            }
+            // 不显示已经过期的队伍
+            // expireTime is null or expireTime > now()
+            queryWrapper.and(qw ->  qw.gt("expireTime", new Date()).or().isNull("expireTime"));
+            // 根据状态进行查询,  这里需要限制只有 管理员才查看一些非公开的 Team
+            Integer status = teamQuery.getStatus();
+            if (status == null) {
+                // 没传入值默认公开
+                status = 0;
+            }
+            if (!userService.isAdmin(loginUser) || !TeamStatusEnum.PUBLIC.equals(TeamStatusEnum.getEnumByValue(status))) {
+                throw new BusinessException(ErrorCode.NO_AUTH);
+            }
+            queryWrapper.eq("status", TeamStatusEnum.getEnumByValue(status));
 
-        return null;
+            // 得到符合要求的条件的队伍, 进行遍历
+            List<Team> teamList = this.list(queryWrapper);
+            if (CollectionUtils.isEmpty(teamList)) {
+                return new ArrayList<>();
+            }
+            List<TeamUserVO> teamUserVOList = new ArrayList<>();
+            for (Team t : teamList) {
+                TeamUserVO teamUserVO = new TeamUserVO();
+                // 查询到每一个组的 创建者的用户信息
+                List<UserVO> creatUser = listTeamUserMapper.listTeamLeader(t.getUserId());
+                // 查询到对应组的用户信息
+                List<UserVO> teamUsers = listTeamUserMapper.listTeamUsers(t.getId());
+                try {
+                    BeanUtils.copyProperties(teamUserVO, t);
+                } catch (Exception e) {
+                    throw new BusinessException(ErrorCode.SYSTEM_ERROR);
+                }
+                // 设置相关的信息
+                teamUserVO.setCreatUser(creatUser.get(0));
+                teamUserVO.setUserList(teamUsers);
+                // 添加到集合之中
+                teamUserVOList.add(teamUserVO);
+            }
+            return teamUserVOList;
+        }
+        return new ArrayList<>();
     }
 }
-

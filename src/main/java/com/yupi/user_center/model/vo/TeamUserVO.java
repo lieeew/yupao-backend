@@ -57,9 +57,22 @@ public class TeamUserVO implements Serializable {
      * 更新时间
      */
     private Date updateTime;
-
+    /**
+     * 参加人用户信息
+     */
     private List<UserVO> userList;
+    /**
+     * 创建人用户信息
+     */
+    private UserVO creatUser;
 
+    public UserVO getCreatUser() {
+        return creatUser;
+    }
+
+    public void setCreatUser(UserVO creatUser) {
+        this.creatUser = creatUser;
+    }
 
     public Long getId() {
         return id;

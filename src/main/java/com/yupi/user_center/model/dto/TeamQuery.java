@@ -1,7 +1,5 @@
 package com.yupi.user_center.model.dto;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.yupi.user_center.common.PageRequest;
 import lombok.EqualsAndHashCode;
 
@@ -20,9 +18,12 @@ public class TeamQuery extends PageRequest {
     /**
      * id
      */
-    @TableId(type = IdType.AUTO)
     private Long id;
 
+    /**
+     * 搜索关键词（同时搜索名称、描述）
+     */
+    private String searchText;
     /**
      * 队伍名称
      */
@@ -47,6 +48,14 @@ public class TeamQuery extends PageRequest {
      * 0 - 公开，1 - 私有，2 - 加密
      */
     private Integer status;
+
+    public String getSearchText() {
+        return searchText;
+    }
+
+    public void setSearchText(String searchText) {
+        this.searchText = searchText;
+    }
 
     public Long getId() {
         return id;

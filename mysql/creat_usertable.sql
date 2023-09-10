@@ -74,3 +74,4 @@ create table team
     isDelete    tinyint  default 0                 not null comment '是否删除'
 )
     comment '队伍'
+

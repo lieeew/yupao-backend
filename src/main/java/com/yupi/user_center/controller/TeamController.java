@@ -97,11 +97,12 @@ public class TeamController {
      * @return
      */
     @GetMapping("/list")
-    public BaseResponse<List<TeamUserVO>> getTeamList(TeamQuery teamQuery) {
+    public BaseResponse<List<TeamUserVO>> getTeamList(TeamQuery teamQuery, HttpServletRequest httpServletRequest) {
         if (teamQuery == null) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "请求参数为 null");
         }
-        List<TeamUserVO> listList = teamService.listTeams(teamQuery);
+        User user = userService.getLoginUser(httpServletRequest);
+        List<TeamUserVO> listList = teamService.listTeams(teamQuery, user);
         return ResultUtils.success(listList);
     }
 

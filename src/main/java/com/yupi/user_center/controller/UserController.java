@@ -17,6 +17,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -123,7 +124,6 @@ public class UserController {
 
     /**
      * 获取用户当前的状态
-     *
      */
     @GetMapping("/current")
     public BaseResponse<User> getUserState(HttpServletRequest request) {
