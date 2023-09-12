@@ -10,6 +10,8 @@ import com.yupi.user_center.model.domain.Team;
 import com.yupi.user_center.model.domain.User;
 import com.yupi.user_center.model.dto.TeamQuery;
 import com.yupi.user_center.model.request.TeamAddRequest;
+import com.yupi.user_center.model.request.TeamJoinRequest;
+import com.yupi.user_center.model.request.TeamUpdateRequest;
 import com.yupi.user_center.model.vo.TeamUserVO;
 import com.yupi.user_center.service.TeamService;
 import com.yupi.user_center.service.UserService;
@@ -67,11 +69,12 @@ public class TeamController {
     }
 
     @PutMapping("/update")
-    public BaseResponse<Boolean> updateTeam(@RequestBody Team team) {
-        if (team == null) {
+    public BaseResponse<Boolean> updateTeam(@RequestBody TeamUpdateRequest teamUpdateRequest, HttpServletRequest request) {
+        if (teamUpdateRequest == null) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "请求参数为 null");
         }
-        boolean updatedById = teamService.updateById(team);
+        User loginUser = userService.getLoginUser(request);
+        boolean updatedById = teamService.updateTeam(teamUpdateRequest, loginUser);
         if (!updatedById) {
             throw new BusinessException(ErrorCode.SYSTEM_ERROR, "更新队伍出现错误");
         }
@@ -97,7 +100,7 @@ public class TeamController {
      * @return
      */
     @GetMapping("/list")
-    public BaseResponse<List<TeamUserVO>> getTeamList(TeamQuery teamQuery, HttpServletRequest httpServletRequest) {
+    public BaseResponse<List<TeamUserVO>> getTeamList(@RequestBody TeamQuery teamQuery, HttpServletRequest httpServletRequest) {
         if (teamQuery == null) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "请求参数为 null");
         }
@@ -107,13 +110,33 @@ public class TeamController {
     }
 
     /**
+     * 加入到队伍
+     *
+     * @param teamJoinRequest
+     * @param request
+     * @return
+     */
+    @PostMapping("/join")
+    public BaseResponse<Boolean> joinTeam(@RequestBody TeamJoinRequest teamJoinRequest, HttpServletRequest request) {
+        if (teamJoinRequest == null) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
+        User loginUser = userService.getLoginUser(request);
+        boolean result = teamService.joinTeam(teamJoinRequest, loginUser);
+        if (!result) {
+            throw new BusinessException(ErrorCode.SYSTEM_ERROR, "加入队伍失败");
+        }
+        return ResultUtils.success(true);
+    }
+
+    /**
      * 获取参数列表
      *
      * @param teamQuery 查询的参数 分装的 DTO类
      * @return
      */
     @GetMapping("/list/page")
-    public BaseResponse<Page<Team>> getTeamListByPage(TeamQuery teamQuery) {
+    public BaseResponse<Page<Team>> getTeamListByPage(@RequestBody TeamQuery teamQuery) {
         if (teamQuery == null) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "请求参数为 null");
         }

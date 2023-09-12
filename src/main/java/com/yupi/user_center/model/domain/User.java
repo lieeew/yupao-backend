@@ -14,7 +14,7 @@ import lombok.Data;
 @TableName(value = "user")
 public class User implements Serializable {
     /**
-     *
+     * id
      */
     @TableId(type = IdType.AUTO)
     private Long id;

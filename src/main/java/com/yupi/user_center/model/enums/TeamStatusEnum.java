@@ -16,7 +16,11 @@ public enum TeamStatusEnum {
     /**
      * 私有
      */
-    PRIVATE(1, "私有");
+    PRIVATE(1, "私有"),
+    /**
+     * 加密
+     */
+    SECRET(2, "加密");
 
 
     private int value;

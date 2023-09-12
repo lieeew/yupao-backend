@@ -5,32 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8d5d19e5-9b8a-47f1-9cd9-10808b60d6a4" name="Changes" comment="leikooo">
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mysql/teamSql.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/yupi/user_center/config/MyBatisConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/yupi/user_center/mapper/ListTeamUserMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/com/yupi/user_center/service/MyBatisTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/ec16eed9-378e-4e18-8c69-a0b3df881526.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/ec16eed9-378e-4e18-8c69-a0b3df881526.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysql/creat_usertable.sql" beforeDir="false" afterPath="$PROJECT_DIR$/mysql/creat_usertable.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysql/yupao.sql" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/yupi/user_center/model/request/TeamUpdateRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/yupao-backend.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/yupi/user_center/controller/TeamController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/yupi/user_center/controller/TeamController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/yupi/user_center/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/yupi/user_center/controller/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/yupi/user_center/mapper/TeamMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/yupi/user_center/mapper/TeamMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/yupi/user_center/model/domain/Team.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/yupi/user_center/model/domain/Team.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/yupi/user_center/model/dto/TeamQuery.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/yupi/user_center/model/dto/TeamQuery.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/yupi/user_center/model/vo/TeamUserVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/yupi/user_center/model/vo/TeamUserVO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/yupi/user_center/model/vo/UserVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/yupi/user_center/model/vo/UserVO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/yupi/user_center/service/TeamService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/yupi/user_center/service/TeamService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/yupi/user_center/service/impl/TeamServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/yupi/user_center/service/impl/TeamServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/yupi/user_center/controller/TeamController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/yupi/user_center/controller/TeamController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/yupi/user_center/controller/UserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/yupi/user_center/controller/UserController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/yupi/user_center/model/domain/Team.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/yupi/user_center/model/domain/Team.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/yupi/user_center/model/dto/TeamQuery.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/yupi/user_center/model/dto/TeamQuery.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/yupi/user_center/service/TeamService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/yupi/user_center/service/TeamService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/yupi/user_center/service/impl/TeamServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/yupi/user_center/service/impl/TeamServiceImpl.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -97,43 +77,43 @@
   <component name="ProjectViewState">
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "com.obroom.plugin.mybatislog.indexNum": "40",
-    "com.obroom.plugin.mybatislog.running": "true",
-    "git-widget-placeholder": "main",
-    "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "E:/yupao/yupao-backend/src/main/java/com/yupi/user_center/service",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "spring.configuration.checksum": "7a2f53b42c94f6674e952313500d6ca9",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;com.obroom.plugin.mybatislog.indexNum&quot;: &quot;40&quot;,
+    &quot;com.obroom.plugin.mybatislog.running&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;E:/yupao/yupao-backend/src/main/java/com/yupi/user_center/service&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;spring.configuration.checksum&quot;: &quot;7a2f53b42c94f6674e952313500d6ca9&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "mysql"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;mysql&quot;
     ],
-    "com.intellij.ide.scratch.LRUPopupBuilder$1/SQL Dialect": [
-      "MySQL"
+    &quot;com.intellij.ide.scratch.LRUPopupBuilder$1/SQL Dialect&quot;: [
+      &quot;MySQL&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="ReactorSettings">
     <option name="notificationShown" value="true" />
   </component>
@@ -144,11 +124,11 @@
       <recent name="E:\yupao\yupao-backend\mysql" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.yupi.user_center.model.request" />
       <recent name="com.yupi.user_center.model.vo" />
       <recent name="com.yupi.user_center.controller" />
       <recent name="com.yupi.user_center.mapper" />
       <recent name="com.yupi.user_center.model.domain" />
-      <recent name="com.yupi.user_center.service" />
     </key>
   </component>
   <component name="RunManager" selected="Spring Boot.UserCenterApplication">

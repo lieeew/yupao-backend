@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.yupi.user_center.model.domain.Team;
 import com.yupi.user_center.model.domain.User;
 import com.yupi.user_center.model.dto.TeamQuery;
+import com.yupi.user_center.model.request.TeamJoinRequest;
+import com.yupi.user_center.model.request.TeamUpdateRequest;
 import com.yupi.user_center.model.vo.TeamUserVO;
 
 import java.util.List;
@@ -31,4 +33,22 @@ public interface TeamService extends IService<Team> {
      * @return
      */
     List<TeamUserVO> listTeams(TeamQuery teamQuery, User loginUser);
+
+    /**
+     * 更新队伍信息
+     *
+     * @param teamUpdateRequest
+     * @return
+     */
+    boolean updateTeam(TeamUpdateRequest teamUpdateRequest, User loginUser);
+
+    /**
+     *
+     *
+     * @param teamJoinRequest
+     * @param loginUser
+     * @return
+     */
+    boolean joinTeam(TeamJoinRequest teamJoinRequest, User loginUser);
+
 }
