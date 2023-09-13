@@ -11,6 +11,7 @@ import com.yupi.user_center.model.domain.User;
 import com.yupi.user_center.model.dto.TeamQuery;
 import com.yupi.user_center.model.request.TeamAddRequest;
 import com.yupi.user_center.model.request.TeamJoinRequest;
+import com.yupi.user_center.model.request.TeamQuitTeam;
 import com.yupi.user_center.model.request.TeamUpdateRequest;
 import com.yupi.user_center.model.vo.TeamUserVO;
 import com.yupi.user_center.service.TeamService;
@@ -57,7 +58,7 @@ public class TeamController {
     }
 
     @DeleteMapping("/delete")
-    public BaseResponse<Boolean> deleteTeam(@RequestBody long id) {
+    public BaseResponse<Boolean> deleteTeam(@RequestBody long id, HttpServletRequest request) {
         if (id <= 0) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "请求参数为 null");
         }
@@ -128,6 +129,23 @@ public class TeamController {
         }
         return ResultUtils.success(true);
     }
+
+    /**
+     * 退出队伍
+     *
+     * @param teamQuitTeam
+     * @param request
+     */
+    @PostMapping("quitTeam")
+    public BaseResponse<Boolean> quitTeam(@RequestBody TeamQuitTeam teamQuitTeam, HttpServletRequest request) {
+        if (teamQuitTeam == null) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
+        User loginUser = userService.getLoginUser(request);
+        boolean result = teamService.quitTeam(teamQuitTeam, loginUser);
+        return ResultUtils.success(result);
+    }
+
 
     /**
      * 获取参数列表

@@ -5,6 +5,7 @@ import com.yupi.user_center.model.domain.Team;
 import com.yupi.user_center.model.domain.User;
 import com.yupi.user_center.model.dto.TeamQuery;
 import com.yupi.user_center.model.request.TeamJoinRequest;
+import com.yupi.user_center.model.request.TeamQuitTeam;
 import com.yupi.user_center.model.request.TeamUpdateRequest;
 import com.yupi.user_center.model.vo.TeamUserVO;
 
@@ -43,7 +44,7 @@ public interface TeamService extends IService<Team> {
     boolean updateTeam(TeamUpdateRequest teamUpdateRequest, User loginUser);
 
     /**
-     *
+     * 添加队伍
      *
      * @param teamJoinRequest
      * @param loginUser
@@ -51,4 +52,12 @@ public interface TeamService extends IService<Team> {
      */
     boolean joinTeam(TeamJoinRequest teamJoinRequest, User loginUser);
 
+    /**
+     * 用户退出队伍
+     *
+     * @param teamQuitTeam
+     * @param loginUser
+     * @return
+     */
+    boolean quitTeam(TeamQuitTeam teamQuitTeam, User loginUser);
 }
