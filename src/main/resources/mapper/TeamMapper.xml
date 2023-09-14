@@ -15,6 +15,7 @@
             <result property="password" column="password" jdbcType="VARCHAR"/>
             <result property="createTime" column="createTime" jdbcType="TIMESTAMP"/>
             <result property="updateTime" column="updateTime" jdbcType="TIMESTAMP"/>
+            <result property="memberCount" column="memberCount" jdbcType="INTEGER"/>
             <result property="isDelete" column="isDelete" jdbcType="TINYINT"/>
     </resultMap>
 
@@ -22,6 +23,6 @@
         id,name,description,
         maxNum,expireTime,userId,
         status,password,createTime,
-        updateTime,isDelete
+        updateTime,memberCount,isDelete
     </sql>
 </mapper>

@@ -6,6 +6,7 @@ import com.yupi.user_center.model.domain.User;
 import com.yupi.user_center.model.dto.TeamQuery;
 import com.yupi.user_center.model.request.TeamJoinRequest;
 import com.yupi.user_center.model.request.TeamQuitTeam;
+import com.yupi.user_center.model.request.TeamRemoveRequest;
 import com.yupi.user_center.model.request.TeamUpdateRequest;
 import com.yupi.user_center.model.vo.TeamUserVO;
 
@@ -28,12 +29,12 @@ public interface TeamService extends IService<Team> {
     long addTeam(Team team, User loginUser);
 
     /**
-     * 查询
+     * 查询队伍
      *
      * @param teamQuery
      * @return
      */
-    List<TeamUserVO> listTeams(TeamQuery teamQuery, User loginUser);
+    List<TeamUserVO> listTeams(TeamQuery teamQuery, User loginUser, int current, int size);
 
     /**
      * 更新队伍信息
@@ -60,4 +61,21 @@ public interface TeamService extends IService<Team> {
      * @return
      */
     boolean quitTeam(TeamQuitTeam teamQuitTeam, User loginUser);
+
+    /**
+     * 队长删除队伍
+     *
+     * @param teamRemoveRequest
+     * @param loginUser
+     * @return
+     */
+    boolean removeTeam(TeamRemoveRequest teamRemoveRequest, User loginUser);
+
+    /**
+     * 获取队伍
+     *
+     * @param teamId 队伍 id
+     * @return 队伍对象
+     */
+    Team getTeamById(Long teamId);
 }

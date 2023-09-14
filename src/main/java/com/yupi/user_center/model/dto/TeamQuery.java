@@ -48,6 +48,15 @@ public class TeamQuery extends PageRequest {
      * 0 - 公开，1 - 私有，2 - 加密
      */
     private Integer status;
+    /**
+     * 当前页数
+     */
+    private int current = 1;
+
+    /**
+     * 该页的显示的数量
+     */
+    private int size = 10;
 
     public String getSearchText() {
         return searchText;
@@ -103,5 +112,21 @@ public class TeamQuery extends PageRequest {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public int getCurrent() {
+        return current;
+    }
+
+    public void setCurrent(int current) {
+        this.current = current;
+    }
+
+    public int getSize() {
+        return size;
+    }
+
+    public void setSize(int size) {
+        this.size = size;
     }
 }

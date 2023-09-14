@@ -24,6 +24,10 @@ public enum ErrorCode {
      */
     NOT_LOGIN(40101, "未登录", ""),
     /**
+     * 禁止访问
+     */
+    FORBIDDEN(40301, "无权限", ""),
+    /**
      * 登录成功
      */
     SUCCESS(0, "ok", ""),

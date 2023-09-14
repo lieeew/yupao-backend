@@ -9,10 +9,7 @@ import com.yupi.user_center.exception.BusinessException;
 import com.yupi.user_center.model.domain.Team;
 import com.yupi.user_center.model.domain.User;
 import com.yupi.user_center.model.dto.TeamQuery;
-import com.yupi.user_center.model.request.TeamAddRequest;
-import com.yupi.user_center.model.request.TeamJoinRequest;
-import com.yupi.user_center.model.request.TeamQuitTeam;
-import com.yupi.user_center.model.request.TeamUpdateRequest;
+import com.yupi.user_center.model.request.*;
 import com.yupi.user_center.model.vo.TeamUserVO;
 import com.yupi.user_center.service.TeamService;
 import com.yupi.user_center.service.UserService;
@@ -58,11 +55,12 @@ public class TeamController {
     }
 
     @DeleteMapping("/delete")
-    public BaseResponse<Boolean> deleteTeam(@RequestBody long id, HttpServletRequest request) {
-        if (id <= 0) {
+    public BaseResponse<Boolean> deleteTeam(@RequestBody TeamRemoveRequest teamRemoveRequest, HttpServletRequest request) {
+        if (teamRemoveRequest == null) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "请求参数为 null");
         }
-        boolean isSuccess = teamService.removeById(id);
+        User loginUser = userService.getLoginUser(request);
+        boolean isSuccess = teamService.removeTeam(teamRemoveRequest, loginUser);
         if (!isSuccess) {
             throw new BusinessException(ErrorCode.SYSTEM_ERROR, "删除队伍出现错误");
         }
@@ -95,7 +93,7 @@ public class TeamController {
     }
 
     /**
-     * 获取参数列表
+     * 获取「队伍」列表
      *
      * @param teamQuery 查询的参数 分装的 DTO类
      * @return
@@ -106,7 +104,7 @@ public class TeamController {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "请求参数为 null");
         }
         User user = userService.getLoginUser(httpServletRequest);
-        List<TeamUserVO> listList = teamService.listTeams(teamQuery, user);
+        List<TeamUserVO> listList = teamService.listTeams(teamQuery, user, teamQuery.getCurrent(), teamQuery.getSize());
         return ResultUtils.success(listList);
     }
 
