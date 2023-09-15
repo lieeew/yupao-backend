@@ -8,17 +8,24 @@ import com.yupi.user_center.common.ResultUtils;
 import com.yupi.user_center.exception.BusinessException;
 import com.yupi.user_center.model.domain.Team;
 import com.yupi.user_center.model.domain.User;
+import com.yupi.user_center.model.domain.UserTeam;
 import com.yupi.user_center.model.dto.TeamQuery;
 import com.yupi.user_center.model.request.*;
 import com.yupi.user_center.model.vo.TeamUserVO;
 import com.yupi.user_center.service.TeamService;
 import com.yupi.user_center.service.UserService;
+import com.yupi.user_center.service.UserTeamService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * @author leikooo
@@ -34,9 +41,10 @@ import java.util.List;
 public class TeamController {
     @Resource
     private TeamService teamService;
-
     @Resource
     private UserService userService;
+    @Resource
+    private UserTeamService userTeamService;
 
     @PostMapping("/add")
     public BaseResponse<Long> addTeam(@RequestBody TeamAddRequest teamAddRequest, HttpServletRequest httpServletRequest) {
@@ -98,13 +106,61 @@ public class TeamController {
      * @param teamQuery 查询的参数 分装的 DTO类
      * @return
      */
-    @GetMapping("/list")
+    @PostMapping("/list")
     public BaseResponse<List<TeamUserVO>> getTeamList(@RequestBody TeamQuery teamQuery, HttpServletRequest httpServletRequest) {
         if (teamQuery == null) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "请求参数为 null");
         }
+        boolean isAdmin = userService.isAdmin(httpServletRequest);
+        List<TeamUserVO> listList = teamService.listTeams(teamQuery, isAdmin);
+        return ResultUtils.success(listList);
+    }
+    /**
+     * 获取「我创建」的队伍列表
+     *
+     * @param teamQuery 查询的参数 分装的 DTO类
+     * @return
+     */
+    @PostMapping("/list/my/creat")
+    public BaseResponse<List<TeamUserVO>> getMyCreatTeamList(@RequestBody TeamQuery teamQuery, HttpServletRequest httpServletRequest) {
+        if (teamQuery == null) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "请求参数为 null");
+        }
         User user = userService.getLoginUser(httpServletRequest);
-        List<TeamUserVO> listList = teamService.listTeams(teamQuery, user, teamQuery.getCurrent(), teamQuery.getSize());
+        teamQuery.setUserId(user.getId());
+        List<TeamUserVO> listList = teamService.listTeams(teamQuery, true);
+        return ResultUtils.success(listList);
+    }
+
+    /**
+     * 获取「我加入」的队伍列表
+     *
+     * @param teamQuery 查询的参数 分装的 DTO类
+     * @return
+     */
+    @PostMapping("/list/my/join")
+    public BaseResponse<List<TeamUserVO>> getMyJoinTeamList(@RequestBody TeamQuery teamQuery, HttpServletRequest request) {
+        if (teamQuery == null) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "请求参数为 null");
+        }
+        User loginUser = userService.getLoginUser(request);
+        QueryWrapper<UserTeam> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("userId", loginUser.getId());
+        // 通过 userId 查找出来 teamId 就可以了
+        List<UserTeam> userTeamList = userTeamService.list(queryWrapper);
+        // 这里就会把类似于
+        // teamId  userId
+        // 1         2
+        // 1         3
+        // 2         4
+        // 变成了
+        // 1 => 2, 3
+        // 2 -> 4
+        Set<Long> idLists = userTeamList.stream()
+                .collect(Collectors.groupingBy(UserTeam::getUserId))
+                .keySet();
+        teamQuery.setListIds((new ArrayList<>(idLists)));
+        List<TeamUserVO> listList = teamService.listTeams(teamQuery, true);
         return ResultUtils.success(listList);
     }
 
@@ -123,7 +179,7 @@ public class TeamController {
         User loginUser = userService.getLoginUser(request);
         boolean result = teamService.joinTeam(teamJoinRequest, loginUser);
         if (!result) {
-            throw new BusinessException(ErrorCode.SYSTEM_ERROR, "加入队伍失败");
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "加入队伍失败");
         }
         return ResultUtils.success(true);
     }

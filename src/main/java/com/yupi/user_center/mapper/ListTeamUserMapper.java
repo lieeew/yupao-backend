@@ -28,6 +28,6 @@ public interface ListTeamUserMapper extends BaseMapper<TeamMapper> {
      * 查询到对应每一个队伍的成员
      *
      */
-    @Select("select u.* from yupi.`team` t left join yupi.`user_team` ut on t.id = ut.teamId left join yupi.`user` u on u.id = ut.userId where t.id = 1 = #{teamId}")
+    @Select("select u.* from yupi.team t left join yupi.user_team ut on t.id = ut.teamId left join yupi.user u on u.id = ut.userId where ut.teamId = #{teamId} and u.isDelete = 0 and ut.isDelete = 0 and t.isDelete = 0")
     List<UserVO> listTeamUsers(@Param("teamId") Long teamId);
 }

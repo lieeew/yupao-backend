@@ -1,21 +1,21 @@
-package com.yupi.user_center.model.vo;
+package com.yupi.user_center.model.domain;
+
+import com.baomidou.mybatisplus.annotation.*;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
 /**
- * @author leikooo
- * @create 2023-09-08 20:58
- * @Package com.yupi.user_center.model.vo
- * @Description team 的包装类（脱敏）
+ * 队伍
+ *
+ * @TableName team
  */
-public class TeamUserVO implements Serializable {
-    private static final long serialVersionUID = -6539018889531025460L;
-
+@TableName(value = "team")
+public class Team implements Serializable {
     /**
      * id
      */
+    @TableId(type = IdType.AUTO)
     private Long id;
 
     /**
@@ -44,14 +44,14 @@ public class TeamUserVO implements Serializable {
     private Long userId;
 
     /**
-     * 当前人数
-     */
-    private Long memberCount;
-
-    /**
      * 0 - 公开，1 - 私有，2 - 加密
      */
     private Integer status;
+
+    /**
+     * 密码
+     */
+    private String password;
 
     /**
      * 创建时间
@@ -59,41 +59,162 @@ public class TeamUserVO implements Serializable {
     private Date createTime;
 
     /**
-     * 更新时间
+     *
      */
     private Date updateTime;
-    /**
-     * 参加人用户信息
-     */
-    private List<UserVO> userList;
 
     /**
-     * 创建人用户信息
+     * 加入队伍的人数
      */
-    private UserVO creatUser;
+    private Long memberCount;
 
-    public UserVO getCreatUser() {
-        return creatUser;
-    }
+    /**
+     * 是否删除
+     */
+    @TableLogic
+    private Long isDelete;
 
-    public void setCreatUser(UserVO creatUser) {
-        this.creatUser = creatUser;
-    }
+    @TableField(exist = false)
+    private static final long serialVersionUID = 1L;
 
+    /**
+     * id
+     */
     public Long getId() {
         return id;
     }
 
+    /**
+     * id
+     */
     public void setId(Long id) {
         this.id = id;
     }
 
+    /**
+     * 队伍名称
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * 队伍名称
+     */
     public void setName(String name) {
         this.name = name;
+    }
+
+    /**
+     * 描述
+     */
+    public String getDescription() {
+        return description;
+    }
+
+    /**
+     * 描述
+     */
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    /**
+     * 最大人数
+     */
+    public Integer getMaxNum() {
+        return maxNum;
+    }
+
+    /**
+     * 最大人数
+     */
+    public void setMaxNum(Integer maxNum) {
+        this.maxNum = maxNum;
+    }
+
+    /**
+     * 过期时间
+     */
+    public Date getExpireTime() {
+        return expireTime;
+    }
+
+    /**
+     * 过期时间
+     */
+    public void setExpireTime(Date expireTime) {
+        this.expireTime = expireTime;
+    }
+
+    /**
+     * 用户id（队长 id）
+     */
+    public Long getUserId() {
+        return userId;
+    }
+
+    /**
+     * 用户id（队长 id）
+     */
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    /**
+     * 0 - 公开，1 - 私有，2 - 加密
+     */
+    public Integer getStatus() {
+        return status;
+    }
+
+    /**
+     * 0 - 公开，1 - 私有，2 - 加密
+     */
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    /**
+     * 密码
+     */
+    public String getPassword() {
+        return password;
+    }
+
+    /**
+     * 密码
+     */
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    /**
+     * 创建时间
+     */
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    /**
+     * 创建时间
+     */
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    /**
+     *
+     */
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    /**
+     *
+     */
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
     }
 
     public Long getMemberCount() {
@@ -104,68 +225,12 @@ public class TeamUserVO implements Serializable {
         this.memberCount = memberCount;
     }
 
-    public String getDescription() {
-        return description;
+    public Long getIsDelete() {
+        return isDelete;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Integer getMaxNum() {
-        return maxNum;
-    }
-
-    public void setMaxNum(Integer maxNum) {
-        this.maxNum = maxNum;
-    }
-
-    public Date getExpireTime() {
-        return expireTime;
-    }
-
-    public void setExpireTime(Date expireTime) {
-        this.expireTime = expireTime;
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
-    public Integer getStatus() {
-        return status;
-    }
-
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    public List<UserVO> getUserList() {
-        return userList;
-    }
-
-    public void setUserList(List<UserVO> userList) {
-        this.userList = userList;
+    public void setIsDelete(Long isDelete) {
+        this.isDelete = isDelete;
     }
 
 }

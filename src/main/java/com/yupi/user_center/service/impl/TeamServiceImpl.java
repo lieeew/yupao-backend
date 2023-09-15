@@ -31,6 +31,7 @@ import org.redisson.api.RedissonClient;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
+
 import javax.annotation.Resource;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
@@ -130,11 +131,11 @@ public class TeamServiceImpl extends ServiceImpl<TeamMapper, Team> implements Te
      * 查询用队伍
      *
      * @param teamQuery
-     * @param loginUser
+     * @param isAdmin
      * @return
      */
     @Override
-    public List<TeamUserVO> listTeams(TeamQuery teamQuery, User loginUser, int current, int size) {
+    public List<TeamUserVO> listTeams(TeamQuery teamQuery, boolean isAdmin) {
         QueryWrapper<Team> queryWrapper = new QueryWrapper<>();
         Team team = new Team();
         try {
@@ -147,6 +148,11 @@ public class TeamServiceImpl extends ServiceImpl<TeamMapper, Team> implements Te
             Long id = teamQuery.getId();
             if (id != null && id > 0) {
                 queryWrapper.eq("id", id);
+            }
+            // 根据 id 集合进行查询，多个队伍
+            List<Long> listIds = teamQuery.getListIds();
+            if (org.apache.commons.collections.CollectionUtils.isNotEmpty(listIds)) {
+                queryWrapper.in("id", listIds);
             }
             // 同时收缩 名称 + 描述
             String searchText = teamQuery.getSearchText();
@@ -179,18 +185,16 @@ public class TeamServiceImpl extends ServiceImpl<TeamMapper, Team> implements Te
             queryWrapper.and(qw -> qw.gt("expireTime", new Date()).or().isNull("expireTime"));
             // 根据状态进行查询,  这里需要限制只有 管理员才查看一些非公开的 Team
             Integer status = teamQuery.getStatus();
-            if (status == null) {
-                // 没传入值默认公开
-                status = 0;
+            if (status != null && status > -1) {
+                queryWrapper.eq("status", status);
             }
-            if (!userService.isAdmin(loginUser) || !TeamStatusEnum.PUBLIC.equals(TeamStatusEnum.getEnumByValue(status))) {
+            if (!isAdmin && !TeamStatusEnum.PUBLIC.equals(TeamStatusEnum.getEnumByValue(status))) {
                 throw new BusinessException(ErrorCode.NO_AUTH);
             }
-            queryWrapper.eq("status", TeamStatusEnum.getEnumByValue(status));
 
             // 得到符合要求的条件的队伍, 进行遍历
             // List<Team> teamList = this.list(queryWrapper);
-            Page<Team> teamPageList = this.page(new Page<>(1, 10), queryWrapper);
+            Page<Team> teamPageList = this.page(new Page<>(teamQuery.getCurrent(), teamQuery.getSize()), queryWrapper);
             if (CollectionUtils.isEmpty(teamPageList.getRecords())) {
                 return new ArrayList<>();
             }

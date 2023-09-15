@@ -3,6 +3,8 @@ package com.yupi.user_center.model.dto;
 import com.yupi.user_center.common.PageRequest;
 import lombok.EqualsAndHashCode;
 
+import java.util.List;
+
 /**
  * @author leikooo
  * @create 2023-09-06 21:06
@@ -13,12 +15,16 @@ import lombok.EqualsAndHashCode;
  * 2） 有一些参数使用不到，可以降低理解成本
  * 3) 多个对象映射到类里面
  */
-@EqualsAndHashCode(callSuper = true)
 public class TeamQuery extends PageRequest {
     /**
      * id
      */
     private Long id;
+
+    /**
+     *  需要查询的 id 序列
+     */
+    private List<Long> listIds;
 
     /**
      * 搜索关键词（同时搜索名称、描述）
@@ -128,5 +134,13 @@ public class TeamQuery extends PageRequest {
 
     public void setSize(int size) {
         this.size = size;
+    }
+
+    public List<Long> getListIds() {
+        return listIds;
+    }
+
+    public void setListIds(List<Long> listIds) {
+        this.listIds = listIds;
     }
 }
