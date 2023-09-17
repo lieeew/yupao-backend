@@ -7,9 +7,13 @@ import com.google.gson.reflect.TypeToken;
 import com.yupi.user_center.common.ErrorCode;
 import com.yupi.user_center.exception.BusinessException;
 import com.yupi.user_center.model.domain.User;
+import com.yupi.user_center.model.vo.UserVO;
 import com.yupi.user_center.service.UserService;
 import com.yupi.user_center.mapper.UserMapper;
+import com.yupi.user_center.utils.AlgorithmUtils;
+import javafx.util.Pair;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -18,27 +22,26 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.lang.reflect.InvocationTargetException;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static com.yupi.user_center.contant.UserConstant.ADMIN_ROLE;
 import static com.yupi.user_center.contant.UserConstant.USER_LOGIN_STATE;
 
 /**
  * 写道 service 里面的方法是一般可能会「服用」的代码
+ *
  * @author leikooo
  * @description 针对表【user】的数据库操作Service实现
  * @createDate 2023-07-02 16:09:52
  */
 @Service
 @Slf4j // 可以加日志
-public class UserServiceImpl extends ServiceImpl<UserMapper, User>
-        implements UserService {
+public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
 
     @Resource
     private UserMapper userMapper;
@@ -252,9 +255,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
             // 可以使用 Java8 新特性进行减少圈复杂度
             tagNameSet = Optional.ofNullable(tagNameSet).orElse(new HashSet<>());
             for (String tagName : tagNameList) {
-                 if (!tagNameSet.contains(tagName)) {
-                     return false;
-                 }
+                if (!tagNameSet.contains(tagName)) {
+                    return false;
+                }
             }
             return true;
         }).map(this::getSafetyUser).collect(Collectors.toList());
@@ -264,7 +267,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     /**
      * 更新用户信息
      *
-     * @param user 需要修改的用户信息
+     * @param user      需要修改的用户信息
      * @param loginUser 当前登录的用用户
      * @return 更新的条数
      */
@@ -288,7 +291,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     }
 
     /**
-     *获取当前登录的信息
+     * 获取当前登录的信息
      *
      * @param request
      * @return
@@ -328,6 +331,55 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     public boolean isAdmin(User loginUser) {
         // 进行鉴权，仅管理员可以查询
         return loginUser != null && loginUser.getUserRole() == ADMIN_ROLE;
+    }
+
+
+    @Override
+    public List<UserVO> matchUsers(long num, User loginUser) {
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        queryWrapper.isNotNull("tags");
+        // 这点非常的重要！！！
+        queryWrapper.select("id", "tags");
+        List<User> userList = this.list(queryWrapper);
+        String tags = loginUser.getTags();
+        Gson gson = new Gson();
+        List<String> tagList = gson.fromJson(tags, new TypeToken<List<String>>() {
+        }.getType());
+        // 对应的下标 => 用户匹配相似度
+        List<Pair<User, Long>> list = new ArrayList<>();
+        for (int i = 0; i < userList.size(); i++) {
+            User user = userList.get(i);
+            String userTags = user.getTags();
+            if (StringUtils.isBlank(userTags) || Objects.equals(user.getId(), loginUser.getId())) {
+                continue;
+            }
+            List<String> userTagList = gson.fromJson(userTags, new TypeToken<List<String>>() {
+            }.getType());
+            long distance = AlgorithmUtils.minDistance(userTagList, tagList);
+            list.add(new Pair<>(userList.get(i), distance));
+        }
+        // 边距距离从小到大
+        List<Pair<User, Long>> topUserPairList = list
+                .stream()
+                .sorted((a, b) -> (int) (a.getValue() - b.getValue()))
+                .limit(num)
+                .collect(Collectors.toList());
+        List<Long> userVOList = topUserPairList.stream().map(pair -> pair.getKey().getId()).collect(Collectors.toList());
+        QueryWrapper<User> userQueryWrapper = new QueryWrapper<>();
+        queryWrapper.in("id", userVOList);
+        List<User> userResultList = this.list(userQueryWrapper);
+        return userResultList
+                .stream()
+                .map(user -> {
+                    UserVO userVO = new UserVO();
+                    try {
+                        BeanUtils.copyProperties(userVO, user);
+                    } catch (Exception e) {
+                        throw new BusinessException(ErrorCode.SYSTEM_ERROR);
+                    }
+                    return userVO;
+                })
+                .collect(Collectors.toList());
     }
 }
 

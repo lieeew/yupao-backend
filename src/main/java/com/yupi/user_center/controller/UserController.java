@@ -5,14 +5,17 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yupi.user_center.common.BaseResponse;
 import com.yupi.user_center.common.ErrorCode;
+import com.yupi.user_center.common.PageRequest;
 import com.yupi.user_center.common.ResultUtils;
 import com.yupi.user_center.exception.BusinessException;
 import com.yupi.user_center.model.domain.User;
 import com.yupi.user_center.model.request.UserLoginRequest;
 import com.yupi.user_center.model.request.UserRegisterRequest;
+import com.yupi.user_center.model.vo.UserVO;
 import com.yupi.user_center.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.data.redis.connection.ReactiveHashCommands;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.util.CollectionUtils;
@@ -181,5 +184,22 @@ public class UserController {
 
         int updated = userService.updateUser(user, loginUser);
         return ResultUtils.success(updated);
+    }
+
+    /**
+     * 根据 tags 进行匹配
+     *
+     * @param request
+     * @param num
+     * @return
+     */
+    @GetMapping("/match")
+    public BaseResponse<List<UserVO>> match(HttpServletRequest request, long num) {
+        if (num <= 0 || num > 20) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
+        User loginUser = userService.getLoginUser(request);
+        List<UserVO> userVOS = userService.matchUsers(num, loginUser);
+        return ResultUtils.success(userVOS);
     }
 }

@@ -36,7 +36,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/team")
 // 后端写跨域比较合理
-@CrossOrigin(origins = {"http://127.0.0.1:5173/", "http://localhost:3000/"}, allowCredentials = "true", allowedHeaders = "*")
+@CrossOrigin(origins = {"http://localhost:3000/"}, allowCredentials = "true", allowedHeaders = "*")
 @Slf4j
 public class TeamController {
     @Resource
@@ -75,7 +75,7 @@ public class TeamController {
         return ResultUtils.success(true);
     }
 
-    @PutMapping("/update")
+    @PostMapping("/update")
     public BaseResponse<Boolean> updateTeam(@RequestBody TeamUpdateRequest teamUpdateRequest, HttpServletRequest request) {
         if (teamUpdateRequest == null) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "请求参数为 null");
@@ -89,7 +89,7 @@ public class TeamController {
     }
 
     @GetMapping("/get")
-    public BaseResponse<Team> getTeamById(@RequestBody long id) {
+    public BaseResponse<Team> getTeamById(long id) {
         if (id <= 0) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
@@ -121,7 +121,7 @@ public class TeamController {
      * @param teamQuery 查询的参数 分装的 DTO类
      * @return
      */
-    @PostMapping("/list/my/creat")
+    @PostMapping("/list/my/create")
     public BaseResponse<List<TeamUserVO>> getMyCreatTeamList(@RequestBody TeamQuery teamQuery, HttpServletRequest httpServletRequest) {
         if (teamQuery == null) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "请求参数为 null");
@@ -157,7 +157,7 @@ public class TeamController {
         // 1 => 2, 3
         // 2 -> 4
         Set<Long> idLists = userTeamList.stream()
-                .collect(Collectors.groupingBy(UserTeam::getUserId))
+                .collect(Collectors.groupingBy(UserTeam::getTeamId))
                 .keySet();
         teamQuery.setListIds((new ArrayList<>(idLists)));
         List<TeamUserVO> listList = teamService.listTeams(teamQuery, true);
@@ -190,7 +190,7 @@ public class TeamController {
      * @param teamQuitTeam
      * @param request
      */
-    @PostMapping("quitTeam")
+    @PostMapping("/quitTeam")
     public BaseResponse<Boolean> quitTeam(@RequestBody TeamQuitTeam teamQuitTeam, HttpServletRequest request) {
         if (teamQuitTeam == null) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);

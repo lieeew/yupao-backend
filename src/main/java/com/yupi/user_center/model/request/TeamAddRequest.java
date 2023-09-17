@@ -17,7 +17,6 @@ public class TeamAddRequest implements Serializable {
     /**
      * id
      */
-    @TableId(type = IdType.AUTO)
     private Long id;
 
     /**
