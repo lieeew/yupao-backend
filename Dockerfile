@@ -4,18 +4,18 @@
 #FROM maven:3.5-jdk-8-alpine as builder
 #
 ## Copy local code to the container image.
-#WORKDIR /app
-#COPY pom.xml .
-#COPY src ./src
+##WORKDIR /app
+##COPY pom.xml .
+##COPY src ./src
 #
 ## Build a release artifact.
 #RUN mvn package -DskipTests
-
+#
 # Run the web service on container startup.
-#CMD ["java","-jar","/app/target/yupao-backend-0.0.1-SNAPSHOT.jar","--spring.profiles.active=prod"]
+#CMD ["java","-jar","./target/yupao-backend-0.0.1-SNAPSHOT.jar","--spring.profiles.active=prod"]
 
 FROM openjdk:8-jdk-alpine
-COPY target/yupao-backend-0.0.1-SNAPSHOT.jar /app/your-application.jar
+COPY ./target/yupao-backend-0.0.1-SNAPSHOT.jar /app/your-application.jar
 WORKDIR /app
-EXPOSE 8080
-CMD ["java", "-jar", "your-application.jar"]
+EXPOSE 8081
+CMD ["java", "-jar", "your-application.jar", "--spring.profiles.active=prod"]

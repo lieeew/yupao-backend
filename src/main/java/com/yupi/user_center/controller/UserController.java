@@ -37,7 +37,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/user")
 // 后端写跨域比较合理
-@CrossOrigin(origins = {"http://127.0.0.1:5173/", "http://localhost:3000/"}, allowCredentials = "true", allowedHeaders = "*")
+@CrossOrigin(origins = {"http://120.77.169.162:88", "http://localhost:3000", "https://yupao-frontend-ten.vercel.app"}, allowCredentials = "true", allowedHeaders = "*")
 @Slf4j
 public class UserController {
     @Resource
@@ -194,12 +194,12 @@ public class UserController {
      * @return
      */
     @GetMapping("/match")
-    public BaseResponse<List<UserVO>> match(HttpServletRequest request, long num) {
+    public BaseResponse<List<User>> match(HttpServletRequest request, long num) {
         if (num <= 0 || num > 20) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
         User loginUser = userService.getLoginUser(request);
-        List<UserVO> userVOS = userService.matchUsers(num, loginUser);
+        List<User> userVOS = userService.matchUsers(num, loginUser);
         return ResultUtils.success(userVOS);
     }
 }

@@ -36,7 +36,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/team")
 // 后端写跨域比较合理
-@CrossOrigin(origins = {"http://localhost:3000/"}, allowCredentials = "true", allowedHeaders = "*")
+@CrossOrigin(origins = {"http://120.77.169.162:88", "http://localhost:3000", "https://yupao-frontend-ten.vercel.app"}, allowCredentials = "true", allowedHeaders = "*")
 @Slf4j
 public class TeamController {
     @Resource
@@ -62,7 +62,7 @@ public class TeamController {
         return ResultUtils.success(teamId);
     }
 
-    @DeleteMapping("/delete")
+    @PostMapping("/delete")
     public BaseResponse<Boolean> deleteTeam(@RequestBody TeamRemoveRequest teamRemoveRequest, HttpServletRequest request) {
         if (teamRemoveRequest == null) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "请求参数为 null");

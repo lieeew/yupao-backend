@@ -6,29 +6,22 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.yupi.user_center.common.ErrorCode;
 import com.yupi.user_center.exception.BusinessException;
-import com.yupi.user_center.model.domain.User;
-import com.yupi.user_center.model.vo.UserVO;
-import com.yupi.user_center.service.UserService;
 import com.yupi.user_center.mapper.UserMapper;
+import com.yupi.user_center.model.domain.User;
+import com.yupi.user_center.service.UserService;
 import com.yupi.user_center.utils.AlgorithmUtils;
 import javafx.util.Pair;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.DigestUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
 import static com.yupi.user_center.contant.UserConstant.ADMIN_ROLE;
 import static com.yupi.user_center.contant.UserConstant.USER_LOGIN_STATE;
 
@@ -335,51 +328,52 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
 
     @Override
-    public List<UserVO> matchUsers(long num, User loginUser) {
+    public List<User> matchUsers(long num, User loginUser) {
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
-        queryWrapper.isNotNull("tags");
-        // 这点非常的重要！！！
         queryWrapper.select("id", "tags");
+        queryWrapper.isNotNull("tags");
         List<User> userList = this.list(queryWrapper);
         String tags = loginUser.getTags();
         Gson gson = new Gson();
         List<String> tagList = gson.fromJson(tags, new TypeToken<List<String>>() {
         }.getType());
-        // 对应的下标 => 用户匹配相似度
+        // 用户列表的下标 => 相似度
         List<Pair<User, Long>> list = new ArrayList<>();
+        // 依次计算所有用户和当前用户的相似度
         for (int i = 0; i < userList.size(); i++) {
             User user = userList.get(i);
             String userTags = user.getTags();
-            if (StringUtils.isBlank(userTags) || Objects.equals(user.getId(), loginUser.getId())) {
+            // 无标签或者为当前用户自己
+            if (StringUtils.isBlank(userTags) || user.getId() == loginUser.getId()) {
                 continue;
             }
             List<String> userTagList = gson.fromJson(userTags, new TypeToken<List<String>>() {
             }.getType());
-            long distance = AlgorithmUtils.minDistance(userTagList, tagList);
-            list.add(new Pair<>(userList.get(i), distance));
+            // 计算分数
+            long distance = AlgorithmUtils.minDistance(tagList, userTagList);
+            list.add(new Pair<>(user, distance));
         }
-        // 边距距离从小到大
-        List<Pair<User, Long>> topUserPairList = list
-                .stream()
+        // 按编辑距离由小到大排序
+        List<Pair<User, Long>> topUserPairList = list.stream()
                 .sorted((a, b) -> (int) (a.getValue() - b.getValue()))
                 .limit(num)
                 .collect(Collectors.toList());
-        List<Long> userVOList = topUserPairList.stream().map(pair -> pair.getKey().getId()).collect(Collectors.toList());
+        // 原本顺序的 userId 列表
+        List<Long> userIdList = topUserPairList.stream().map(pair -> pair.getKey().getId()).collect(Collectors.toList());
         QueryWrapper<User> userQueryWrapper = new QueryWrapper<>();
-        queryWrapper.in("id", userVOList);
-        List<User> userResultList = this.list(userQueryWrapper);
-        return userResultList
+        userQueryWrapper.in("id", userIdList);
+        // 1, 3, 2
+        // User1、User2、User3
+        // 1 => User1, 2 => User2, 3 => User3
+        Map<Long, List<User>> userIdUserListMap = this.list(userQueryWrapper)
                 .stream()
-                .map(user -> {
-                    UserVO userVO = new UserVO();
-                    try {
-                        BeanUtils.copyProperties(userVO, user);
-                    } catch (Exception e) {
-                        throw new BusinessException(ErrorCode.SYSTEM_ERROR);
-                    }
-                    return userVO;
-                })
-                .collect(Collectors.toList());
+                .map(this::getSafetyUser)
+                .collect(Collectors.groupingBy(User::getId));
+        List<User> finalUserList = new ArrayList<>();
+        for (Long userId : userIdList) {
+            finalUserList.add(userIdUserListMap.get(userId).get(0));
+        }
+        return finalUserList;
     }
 }
 
