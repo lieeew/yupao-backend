@@ -6,12 +6,9 @@ spring:
     # DataSource Config
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-#    url: jdbc:mysql://localhost:3306/yupi?serverTimezone=Asia/Shanghai
-#    username: root
-#    password: hsphsp
-    url: 'jdbc:mysql://sh-cynosdbmysql-grp-622vdsnq.sql.tencentcdb.com:25615/yupao_backend'
-    username: yupao_database
-    password: Ee719963000
+    url: jdbc:mysql://localhost:3306/yupi?serverTimezone=Asia/Shanghai
+    username: root
+    password: hsphsp
   session:
     timeout: 86400 #这个单位是分钟
     store-type: redis
