@@ -111,7 +111,7 @@ public class TeamServiceImpl extends ServiceImpl<TeamMapper, Team> implements Te
         team.setId(null);
         team.setUserId(userId);
         boolean save = this.save(team);
-        if (!save || teamId == null) {
+        if (!save) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "保存队伍信息失败");
         }
         // 插入用户 => 队伍关系表
