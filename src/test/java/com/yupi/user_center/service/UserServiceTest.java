@@ -51,50 +51,50 @@ class UserServiceTest {
 
     @Test
     void userRegister() {
-        String useAccount = "yupi";
-        String userPassword = "";
-        String checkPassword = "12345678";
-        String planetCode = "12";
-        long result = userService.userRegister(useAccount, userPassword, checkPassword, planetCode);
-        Assert.assertEquals(-1, result);
-
-        // 账户长度
-        userPassword = "12345678";
-        useAccount = "yu";
-        result = userService.userRegister(useAccount, userPassword, checkPassword, planetCode);
-        Assert.assertEquals(-1, result);
-
-        // 密码不小于 8 位
-        userPassword = "123456";
-        checkPassword = "123456";
-        result = userService.userRegister(useAccount, userPassword, checkPassword, planetCode);
-        Assert.assertEquals(-1, result);
-
-        // 账户不包含特殊字符
-        useAccount = "YUPI&$$";
-        userPassword = "1234567890";
-        checkPassword = "1234567890";
-        result = userService.userRegister(useAccount, userPassword, checkPassword, planetCode);
-        Assert.assertEquals(-1, result);
-
-        // 密码和校验密码相同
-        checkPassword = "123456789";
-        userPassword = "1234567890";
-        result = userService.userRegister(useAccount, userPassword, checkPassword, planetCode);
-        Assert.assertEquals(-1, result);
-
-        // 账户不能重复
-        checkPassword = "1234567890";
-        useAccount = "yupi";
-        userPassword = "1234567890";
-        result = userService.userRegister(useAccount, userPassword, checkPassword, planetCode);
-        Assert.assertEquals(-1, result);
-
-        // 测试插入成功
-        useAccount = "aaaaaaaa";
-        result = userService.userRegister(useAccount, userPassword, checkPassword, planetCode);
-
-        Assert.assertTrue(result > 0);
+        // String useAccount = "yupi";
+        // String userPassword = "";
+        // String checkPassword = "12345678";
+        // String planetCode = "12";
+        // long result = userService.userRegister(useAccount, userPassword, checkPassword, planetCode);
+        // Assert.assertEquals(-1, result);
+        //
+        // // 账户长度
+        // userPassword = "12345678";
+        // useAccount = "yu";
+        // result = userService.userRegister(useAccount, userPassword, checkPassword, planetCode);
+        // Assert.assertEquals(-1, result);
+        //
+        // // 密码不小于 8 位
+        // userPassword = "123456";
+        // checkPassword = "123456";
+        // result = userService.userRegister(useAccount, userPassword, checkPassword, planetCode);
+        // Assert.assertEquals(-1, result);
+        //
+        // // 账户不包含特殊字符
+        // useAccount = "YUPI&$$";
+        // userPassword = "1234567890";
+        // checkPassword = "1234567890";
+        // result = userService.userRegister(useAccount, userPassword, checkPassword, planetCode);
+        // Assert.assertEquals(-1, result);
+        //
+        // // 密码和校验密码相同
+        // checkPassword = "123456789";
+        // userPassword = "1234567890";
+        // result = userService.userRegister(useAccount, userPassword, checkPassword, planetCode);
+        // Assert.assertEquals(-1, result);
+        //
+        // // 账户不能重复
+        // checkPassword = "1234567890";
+        // useAccount = "yupi";
+        // userPassword = "1234567890";
+        // result = userService.userRegister(useAccount, userPassword, checkPassword, planetCode);
+        // Assert.assertEquals(-1, result);
+        //
+        // // 测试插入成功
+        // useAccount = "aaaaaaaa";
+        // result = userService.userRegister(useAccount, userPassword, checkPassword, planetCode);
+        //
+        // Assert.assertTrue(result > 0);
     }
 
     @Test

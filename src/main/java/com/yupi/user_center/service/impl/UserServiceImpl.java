@@ -8,6 +8,7 @@ import com.yupi.user_center.common.ErrorCode;
 import com.yupi.user_center.exception.BusinessException;
 import com.yupi.user_center.mapper.UserMapper;
 import com.yupi.user_center.model.domain.User;
+import com.yupi.user_center.model.request.UserRegisterRequest;
 import com.yupi.user_center.service.UserService;
 import com.yupi.user_center.utils.AlgorithmUtils;
 import javafx.util.Pair;
@@ -46,33 +47,63 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
 
     @Override
-    public long userRegister(String userAccount, String userPassword, String checkPassword, String planetCode) {
+    public long userRegister(UserRegisterRequest userRegisterRequest) {
+        String userAccount = userRegisterRequest.getUserAccount();
+        String checkPassword = userRegisterRequest.getCheckPassword();
+        String userPassword = userRegisterRequest.getUserPassword();
+        String planetCode = userRegisterRequest.getPlanetCode();
+        String email = userRegisterRequest.getEmail();
+        String phone = userRegisterRequest.getPhone();
+        Integer gender = userRegisterRequest.getGender();
         // 一、 校验, 需要非空
         if (StringUtils.isAllBlank(userAccount, userPassword, checkPassword)) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
         // 二、 校验用户的账户、密码、校验密码，是否符合要求
-        // 2. 账户长度不小于 4 位
+        // 账户长度不小于 4 位
         if (userAccount.length() < 4) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "账号长度小于 4 位");
         }
-        // 3. 密码就不小于 8 位
+        // 密码就不小于 8 位
         if (userPassword.length() < 8 || checkPassword.length() < 8) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "密码小于 8 位");
         }
-        // 4. 账户不包含特殊字符
+        // 账户不包含特殊字符
         String pattern = "[`~!@#$%^&*()+=|{}':;',\\\\[\\\\].<>/?~！@#￥%……&*（）——+|{}【】‘；：”“’。，、？]";
         Matcher matcher = Pattern.compile(pattern).matcher(userAccount);
         if (matcher.find()) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "包含特殊字符");
         }
 
-        // 5. 密码和校验密码相同
+        // 验证手机号码
+        pattern = "^1[3-9]\\d{9}$";
+        if (StringUtils.isNotBlank(phone)) {
+            matcher = Pattern.compile(pattern).matcher(phone);
+            if (!matcher.find()) {
+                throw new BusinessException(ErrorCode.PARAMS_ERROR, "手机号码格式错误");
+            }
+        }
+
+        // 验证邮箱
+        pattern = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
+        if (StringUtils.isNotBlank(email)) {
+            matcher = Pattern.compile(pattern).matcher(email);
+            if (!matcher.find()) {
+                throw new BusinessException(ErrorCode.PARAMS_ERROR, "邮箱格式错误");
+            }
+        }
+
+        // 验证性别
+        if (gender > 1 || gender < 0) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "性别格式错误");
+        }
+
+        // 密码和校验密码相同
         if (!userPassword.equals(checkPassword)) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "密码和校验密码不一致");
         }
 
-        // 6. 账户不能重复
+        // 账户不能重复
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("userAccount", userAccount);
         long count = userMapper.selectCount(queryWrapper);
@@ -80,7 +111,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "已经存在该用户");
         }
 
-        // 7. 星球编号现在设置为不大于 5 位
+        // 星球编号现在设置为不大于 5 位
         if (planetCode.length() > 5) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "星球参数大于 5 位");
         }
@@ -92,7 +123,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         if (count > 0) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "星球编号不能重复");
         }
-
 
         // 三、 插入数据
         // 对密码进行加盐

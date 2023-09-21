@@ -1,7 +1,5 @@
 package com.yupi.user_center.model.request;
 
-import lombok.Data;
-
 import java.io.Serializable;
 
 /**
@@ -16,6 +14,9 @@ public class UserRegisterRequest implements Serializable {
     private String userPassword;
     private String checkPassword;
     private String planetCode;
+    private String phone;
+    private String email;
+    private Integer gender;
 
     public String getUserAccount() {
         return userAccount;
@@ -47,5 +48,29 @@ public class UserRegisterRequest implements Serializable {
 
     public void setPlanetCode(String planetCode) {
         this.planetCode = planetCode;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public Integer getGender() {
+        return gender;
+    }
+
+    public void setGender(Integer gender) {
+        this.gender = gender;
     }
 }

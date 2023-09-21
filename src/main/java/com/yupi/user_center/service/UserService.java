@@ -2,6 +2,7 @@ package com.yupi.user_center.service;
 
 import com.yupi.user_center.model.domain.User;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.yupi.user_center.model.request.UserRegisterRequest;
 import com.yupi.user_center.model.vo.UserVO;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,12 +18,10 @@ public interface UserService extends IService<User> {
     /**
      * 用户注册方法
      *
-     * @param userAccount   用户账号
-     * @param userPassword  用户密码
-     * @param checkPassword 第二次密码
+     * @param userRegisterRequest
      * @return 新用户 id
      */
-    long userRegister(String userAccount, String userPassword, String checkPassword, String planetCode);
+    long userRegister(UserRegisterRequest userRegisterRequest);
 
     /**
      * 用户登录
