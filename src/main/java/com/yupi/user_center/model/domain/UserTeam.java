@@ -1,7 +1,12 @@
 package com.yupi.user_center.model.domain;
 
 import com.baomidou.mybatisplus.annotation.*;
+import com.yupi.user_center.common.ErrorCode;
+import com.yupi.user_center.exception.BusinessException;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -12,6 +17,8 @@ import java.util.Date;
  * @TableName user_team
  */
 @TableName(value ="user_team")
+@Getter
+@NoArgsConstructor
 public class UserTeam implements Serializable {
     /**
      * id
@@ -51,61 +58,27 @@ public class UserTeam implements Serializable {
     private Integer isDelete;
 
     @TableField(exist = false)
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = -4803328770162900181L;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
+    public UserTeam(Long id, Long userId, Long teamId, Date joinTime, Date createTime, Date updateTime, Integer isDelete) {
+        // 在这里校验非常的方便
+        if (userId <= 0 || teamId <= 0) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "teamId or userId is illegal");
+        }
         this.id = id;
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
         this.userId = userId;
-    }
-
-    public Long getTeamId() {
-        return teamId;
-    }
-
-    public void setTeamId(Long teamId) {
         this.teamId = teamId;
-    }
-
-    public Date getJoinTime() {
-        return joinTime;
-    }
-
-    public void setJoinTime(Date joinTime) {
         this.joinTime = joinTime;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
         this.createTime = createTime;
-    }
-
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
-    }
-
-    public Integer getIsDelete() {
-        return isDelete;
-    }
-
-    public void setIsDelete(Integer isDelete) {
         this.isDelete = isDelete;
+    }
+
+    public UserTeam(Long userId, Long teamId) {
+        if (userId <= 0 || teamId <= 0) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "teamId or userId is illegal");
+        }
+        this.userId = userId;
+        this.teamId = teamId;
     }
 }

@@ -1,6 +1,9 @@
 package com.yupi.user_center.model.domain;
 
 import com.baomidou.mybatisplus.annotation.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -8,9 +11,13 @@ import java.util.Date;
 /**
  * 队伍
  *
+ * @author leikooo
  * @TableName team
  */
 @TableName(value = "team")
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Team implements Serializable {
     /**
      * id
@@ -75,162 +82,16 @@ public class Team implements Serializable {
     private Long isDelete;
 
     @TableField(exist = false)
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = -8005753153332247283L;
 
     /**
-     * id
-     */
-    public Long getId() {
-        return id;
-    }
-
-    /**
-     * id
-     */
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    /**
-     * 队伍名称
-     */
-    public String getName() {
-        return name;
-    }
-
-    /**
-     * 队伍名称
-     */
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    /**
-     * 描述
-     */
-    public String getDescription() {
-        return description;
-    }
-
-    /**
-     * 描述
-     */
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    /**
-     * 最大人数
-     */
-    public Integer getMaxNum() {
-        return maxNum;
-    }
-
-    /**
-     * 最大人数
-     */
-    public void setMaxNum(Integer maxNum) {
-        this.maxNum = maxNum;
-    }
-
-    /**
-     * 过期时间
-     */
-    public Date getExpireTime() {
-        return expireTime;
-    }
-
-    /**
-     * 过期时间
-     */
-    public void setExpireTime(Date expireTime) {
-        this.expireTime = expireTime;
-    }
-
-    /**
-     * 用户id（队长 id）
-     */
-    public Long getUserId() {
-        return userId;
-    }
-
-    /**
-     * 用户id（队长 id）
-     */
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
-    /**
-     * 0 - 公开，1 - 私有，2 - 加密
-     */
-    public Integer getStatus() {
-        return status;
-    }
-
-    /**
-     * 0 - 公开，1 - 私有，2 - 加密
-     */
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
-
-    /**
-     * 密码
-     */
-    public String getPassword() {
-        return password;
-    }
-
-    /**
-     * 密码
-     */
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    /**
-     * 创建时间
-     */
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    /**
-     * 创建时间
-     */
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    /**
+     * 修改队伍人数
      *
+     * @param oldTeam
+     * @param count
+     * @return
      */
-    public Date getUpdateTime() {
-        return updateTime;
+    public Team changeMemberCount(final Team oldTeam, final long count) {
+        return new Team(oldTeam.getId(), oldTeam.getName(), oldTeam.getDescription(), oldTeam.getMaxNum(), oldTeam.getExpireTime(), oldTeam.getUserId(), oldTeam.getStatus(), oldTeam.getPassword(), oldTeam.getCreateTime(), oldTeam.getUpdateTime(), count, oldTeam.getIsDelete());
     }
-
-    /**
-     *
-     */
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    public Long getMemberCount() {
-        return memberCount;
-    }
-
-    public void setMemberCount(Long memberCount) {
-        this.memberCount = memberCount;
-    }
-
-    public Long getIsDelete() {
-        return isDelete;
-    }
-
-    public void setIsDelete(Long isDelete) {
-        this.isDelete = isDelete;
-    }
-
 }

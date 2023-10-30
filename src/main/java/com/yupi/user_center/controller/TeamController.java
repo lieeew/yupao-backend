@@ -36,7 +36,6 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/team")
 // 后端写跨域比较合理
-@CrossOrigin(origins = {"http://120.77.169.162:88", "http://localhost:3000", "https://yupao-frontend-ten.vercel.app"}, allowCredentials = "true", allowedHeaders = "*")
 @Slf4j
 public class TeamController {
     @Resource
@@ -47,7 +46,7 @@ public class TeamController {
     private UserTeamService userTeamService;
 
     @PostMapping("/add")
-    public BaseResponse<Long> addTeam(@RequestBody TeamAddRequest teamAddRequest, HttpServletRequest httpServletRequest) {
+    public BaseResponse<Long> addTeam(@RequestBody final TeamAddRequest teamAddRequest, final HttpServletRequest httpServletRequest) {
         if (teamAddRequest == null) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "请求参数为 null");
         }

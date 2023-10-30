@@ -5,13 +5,18 @@ import com.baomidou.mybatisplus.annotation.*;
 import java.io.Serializable;
 import java.util.Date;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 /**
  * @author leikooo
  * @TableName user
  */
 @TableName(value = "user")
+@Getter
+@NoArgsConstructor
 public class User implements Serializable {
     /**
      * id
@@ -96,133 +101,32 @@ public class User implements Serializable {
     private String profile;
 
     @TableField(exist = false)
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 5125049559299850365L;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getUserAccount() {
-        return userAccount;
-    }
-
-    public void setUserAccount(String userAccount) {
+    public User(String userAccount, String avatarUrl, String userPassword, Integer userRole, String planetCode) {
         this.userAccount = userAccount;
-    }
-
-    public String getAvatarUrl() {
-        return avatarUrl;
-    }
-
-    public void setAvatarUrl(String avatarUrl) {
         this.avatarUrl = avatarUrl;
-    }
-
-    public Integer getGender() {
-        return gender;
-    }
-
-    public void setGender(Integer gender) {
-        this.gender = gender;
-    }
-
-    public String getUserPassword() {
-        return userPassword;
-    }
-
-    public void setUserPassword(String userPassword) {
         this.userPassword = userPassword;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public Integer getUserStatus() {
-        return userStatus;
-    }
-
-    public void setUserStatus(Integer userStatus) {
-        this.userStatus = userStatus;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    public Integer getIsDelete() {
-        return isDelete;
-    }
-
-    public void setIsDelete(Integer isDelete) {
-        this.isDelete = isDelete;
-    }
-
-    public Integer getUserRole() {
-        return userRole;
-    }
-
-    public void setUserRole(Integer userRole) {
         this.userRole = userRole;
-    }
-
-    public String getPlanetCode() {
-        return planetCode;
-    }
-
-    public void setPlanetCode(String planetCode) {
         this.planetCode = planetCode;
     }
 
-    public String getTags() {
-        return tags;
-    }
-
-    public void setTags(String tags) {
+    public User(Long id, String username, String userAccount, String avatarUrl, Integer gender, String userPassword, String phone, String email, Integer userStatus, Date createTime, Date updateTime, Integer isDelete, Integer userRole, String planetCode, String tags, String profile) {
+        this.id = id;
+        this.username = username;
+        this.userAccount = userAccount;
+        this.avatarUrl = avatarUrl;
+        this.gender = gender;
+        this.userPassword = userPassword;
+        this.phone = phone;
+        this.email = email;
+        this.userStatus = userStatus;
+        this.createTime = createTime;
+        this.updateTime = updateTime;
+        this.isDelete = isDelete;
+        this.userRole = userRole;
+        this.planetCode = planetCode;
         this.tags = tags;
-    }
-
-    public String getProfile() {
-        return profile;
-    }
-
-    public void setProfile(String profile) {
         this.profile = profile;
     }
 }

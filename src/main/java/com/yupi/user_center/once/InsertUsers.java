@@ -16,6 +16,7 @@ import java.util.Date;
  * @Description
  */
 @Component
+@Deprecated
 public class InsertUsers {
     @Resource
     private UserMapper userMapper;
@@ -31,20 +32,6 @@ public class InsertUsers {
         stopWatch.start();
         for (int i = 0; i < INSERT_NUM; i++) {
             User user = new User();
-            user.setUsername("fakeLieeew");
-            user.setUserAccount("fakeLieeew");
-            user.setAvatarUrl("https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png");
-            user.setGender(0);
-            user.setUserPassword("");
-            user.setPhone("123");
-            user.setEmail("123");
-            user.setUserStatus(0);
-            user.setCreateTime(new Date());
-            user.setUpdateTime(new Date());
-            user.setIsDelete(0);
-            user.setUserRole(0);
-            user.setTags("");
-            user.setProfile("");
             userMapper.insert(user);
         }
         System.out.println(stopWatch.getTotalTimeMillis());

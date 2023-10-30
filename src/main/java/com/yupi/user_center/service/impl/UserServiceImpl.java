@@ -23,6 +23,7 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+
 import static com.yupi.user_center.contant.UserConstant.ADMIN_ROLE;
 import static com.yupi.user_center.contant.UserConstant.USER_LOGIN_STATE;
 
@@ -47,7 +48,40 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
 
     @Override
-    public long userRegister(UserRegisterRequest userRegisterRequest) {
+    public long userRegister(final UserRegisterRequest userRegisterRequest) {
+        verifyRegisterParams(userRegisterRequest);
+        String userAccount = userRegisterRequest.getUserAccount();
+        String planetCode = userRegisterRequest.getPlanetCode();
+        // 账户不能重复
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("userAccount", userAccount);
+        long count = userMapper.selectCount(queryWrapper);
+        if (count > 0) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "已经存在该用户");
+        }
+        queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("planetCode", planetCode);
+        count = userMapper.selectCount(queryWrapper);
+        if (count > 0) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "星球编号不能重复");
+        }
+        // 对密码进行加盐
+        User user = new User(userAccount, "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png", DigestUtils.md5DigestAsHex((SALT + userRegisterRequest.getUserPassword()).getBytes()), 0, planetCode);
+        // 保存用户
+        boolean save = this.save(user);
+        if (!save) {
+            throw new BusinessException(ErrorCode.SAVE_FAILURE);
+        }
+        // 返回注册的 ID 号
+        return user.getId();
+    }
+
+    /**
+     * 校验参数
+     *
+     * @param userRegisterRequest
+     */
+    private void verifyRegisterParams(final UserRegisterRequest userRegisterRequest) {
         String userAccount = userRegisterRequest.getUserAccount();
         String checkPassword = userRegisterRequest.getCheckPassword();
         String userPassword = userRegisterRequest.getUserPassword();
@@ -74,7 +108,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         if (matcher.find()) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "包含特殊字符");
         }
-
         // 验证手机号码
         pattern = "^1[3-9]\\d{9}$";
         if (StringUtils.isNotBlank(phone)) {
@@ -83,7 +116,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
                 throw new BusinessException(ErrorCode.PARAMS_ERROR, "手机号码格式错误");
             }
         }
-
         // 验证邮箱
         pattern = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
         if (StringUtils.isNotBlank(email)) {
@@ -92,81 +124,25 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
                 throw new BusinessException(ErrorCode.PARAMS_ERROR, "邮箱格式错误");
             }
         }
-
         // 验证性别
         if (gender > 1 || gender < 0) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "性别格式错误");
         }
-
         // 密码和校验密码相同
         if (!userPassword.equals(checkPassword)) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "密码和校验密码不一致");
         }
-
-        // 账户不能重复
-        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("userAccount", userAccount);
-        long count = userMapper.selectCount(queryWrapper);
-        if (count > 0) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR, "已经存在该用户");
-        }
-
         // 星球编号现在设置为不大于 5 位
         if (planetCode.length() > 5) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "星球参数大于 5 位");
         }
-
-        // 7. 星球编号不能重复
-        queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("planetCode", planetCode);
-        count = userMapper.selectCount(queryWrapper);
-        if (count > 0) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR, "星球编号不能重复");
-        }
-
-        // 三、 插入数据
-        // 对密码进行加盐
-        User user = new User();
-
-        String encryptPassword = DigestUtils.md5DigestAsHex((SALT + userPassword).getBytes());
-        user.setUserAccount(userAccount);
-        user.setUserPassword(encryptPassword);
-        user.setPlanetCode(planetCode);
-        // 设置默认图片的路径
-        user.setAvatarUrl("https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png");
-        // 保存用户
-        boolean save = this.save(user);
-        if (!save) {
-            throw new BusinessException(ErrorCode.SAVE_FAILURE);
-        }
-        // 返回注册的 ID 号
-        return user.getId();
     }
-
     @Override
     public User userLogin(String userAccount, String userPassword, HttpServletRequest request) {
-        // 一、 校验, 需要非空
         if (StringUtils.isAllBlank(userAccount, userPassword)) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
-
-        // 二、 校验用户的账户、密码、校验密码，是否符合要求
-        // 2. 账户长度不小于 4 位
-        if (userAccount.length() < 4) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR, "账号长度小于 4 位");
-        }
-        // 3. 密码就不小于 8 位
-        if (userPassword.length() < 8) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR, "密码小于 8 位");
-        }
-        // 4. 账户不包含特殊字符
-        String pattern = "[`~!@#$%^&*()+=|{}':;',\\\\[\\\\].<>/?~！@#￥%……&*（）——+|{}【】‘；：”“’。，、？]";
-        Matcher matcher = Pattern.compile(pattern).matcher(userAccount);
-        if (matcher.find()) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR, "包含特殊字符");
-        }
-
-        // 三、 检查数据
+        verifyLoginParams(userAccount, userPassword);
         String encryptPassword = DigestUtils.md5DigestAsHex((SALT + userPassword).getBytes());
         // 查询数据库, 进行比对密码的操作
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
@@ -182,12 +158,27 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
         // 这里重新生成一个对象，进行返回数据
         User saftyUser = getSafetyUser(user);
-
         // 记录用户的登录状态
         request.getSession().setAttribute(USER_LOGIN_STATE, saftyUser);
         return saftyUser;
     }
 
+    private void verifyLoginParams(final String userAccount, final String userPassword) {
+        // 账户长度不小于 4 位
+        if (userAccount.length() < 4) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "账号长度小于 4 位");
+        }
+        // 密码就不小于 8 位
+        if (userPassword.length() < 8) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "密码小于 8 位");
+        }
+        // 账户不包含特殊字符
+        String pattern = "[`~!@#$%^&*()+=|{}':;',\\\\[\\\\].<>/?~！@#￥%……&*（）——+|{}【】‘；：”“’。，、？]";
+        Matcher matcher = Pattern.compile(pattern).matcher(userAccount);
+        if (matcher.find()) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "包含特殊字符");
+        }
+    }
     /**
      * 得到脱敏的用户
      *
@@ -200,25 +191,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         if (originUser == null) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
-
         // 脱敏
-        User saftyUser = new User();
-
-        saftyUser.setId(originUser.getId());
-        saftyUser.setUsername(originUser.getUsername());
-        saftyUser.setUserAccount(originUser.getUserAccount());
-        saftyUser.setAvatarUrl(originUser.getAvatarUrl());
-        saftyUser.setGender(originUser.getGender());
-        saftyUser.setPhone(originUser.getPhone());
-        saftyUser.setEmail(originUser.getEmail());
-        saftyUser.setUserStatus(originUser.getUserStatus());
-        saftyUser.setCreateTime(originUser.getCreateTime());
-        saftyUser.setIsDelete(originUser.getIsDelete());
-        saftyUser.setUserRole(originUser.getUserRole());
-        saftyUser.setPlanetCode(originUser.getPlanetCode());
-        saftyUser.setTags(originUser.getTags());
-        saftyUser.setProfile(originUser.getProfile());
-        return saftyUser;
+        return new User(originUser.getId(), originUser.getUsername(), originUser.getUserAccount(), originUser.getAvatarUrl(), originUser.getGender(), "", originUser.getPhone(), originUser.getEmail(), originUser.getUserStatus(), originUser.getCreateTime(), originUser.getUpdateTime(), originUser.getIsDelete(), originUser.getUserRole(), originUser.getPlanetCode(), originUser.getTags(), originUser.getProfile());
     }
 
     /**

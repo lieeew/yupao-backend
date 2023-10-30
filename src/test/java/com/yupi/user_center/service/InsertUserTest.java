@@ -40,20 +40,6 @@ public class InsertUserTest {
         Collection<User> users = new ArrayList<>();
         for (int i = 0; i < INSERT_NUM; i++) {
             User user = new User();
-            user.setUsername("fakeLeikooo");
-            user.setUserAccount("fakeLeikooo");
-            user.setAvatarUrl("https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png");
-            user.setGender(0);
-            user.setUserPassword("");
-            user.setPhone("123");
-            user.setEmail("123");
-            user.setUserStatus(0);
-            user.setCreateTime(new Date());
-            user.setUpdateTime(new Date());
-            user.setIsDelete(0);
-            user.setUserRole(0);
-            user.setTags("");
-            user.setProfile("");
             users.add(user);
         }
         userService.saveBatch(users, 100);
@@ -72,20 +58,6 @@ public class InsertUserTest {
             while (true) {
                 j++;
                 User user = new User();
-                user.setUsername("fakeLeikooo");
-                user.setUserAccount("fakeLeikooo");
-                user.setAvatarUrl("https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png");
-                user.setGender(0);
-                user.setUserPassword("");
-                user.setPhone("123");
-                user.setEmail("123");
-                user.setUserStatus(0);
-                user.setCreateTime(new Date());
-                user.setUpdateTime(new Date());
-                user.setIsDelete(0);
-                user.setUserRole(0);
-                user.setTags("");
-                user.setProfile("");
                 users.add(user);
                 if (j % 10000 == 0) {
                     break;

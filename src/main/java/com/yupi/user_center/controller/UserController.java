@@ -36,8 +36,6 @@ import java.util.stream.Collectors;
  */
 @RestController
 @RequestMapping("/user")
-// 后端写跨域比较合理
-@CrossOrigin(origins = {"http://120.77.169.162:88", "http://localhost:3000", "https://yupao-frontend-ten.vercel.app"}, allowCredentials = "true", allowedHeaders = "*")
 @Slf4j
 public class UserController {
     @Resource

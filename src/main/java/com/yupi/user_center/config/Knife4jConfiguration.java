@@ -18,8 +18,6 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2WebMvc;
  */
 @Configuration
 @EnableSwagger2WebMvc
-// 让这个 bean 只在本地运行
-@Profile({"dev", "test"})
 public class Knife4jConfiguration {
 
     @Bean(value = "defaultApi2")
