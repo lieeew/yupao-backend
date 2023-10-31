@@ -19,6 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -114,6 +115,7 @@ public class TeamController {
         List<TeamUserVO> listList = teamService.listTeams(teamQuery, isAdmin);
         return ResultUtils.success(listList);
     }
+
     /**
      * 获取「我创建」的队伍列表
      *
@@ -121,13 +123,12 @@ public class TeamController {
      * @return
      */
     @PostMapping("/list/my/create")
-    public BaseResponse<List<TeamUserVO>> getMyCreatTeamList(@RequestBody TeamQuery teamQuery, HttpServletRequest httpServletRequest) {
+    public BaseResponse<List<TeamUserVO>> getMyCreatTeamList(@RequestBody final TeamQuery teamQuery, HttpServletRequest httpServletRequest) {
         if (teamQuery == null) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "请求参数为 null");
         }
         User user = userService.getLoginUser(httpServletRequest);
-        teamQuery.setUserId(user.getId());
-        List<TeamUserVO> listList = teamService.listTeams(teamQuery, true);
+        List<TeamUserVO> listList = teamService.listTeams(teamQuery.changeUserId(teamQuery, user.getId()), true);
         return ResultUtils.success(listList);
     }
 
@@ -138,7 +139,7 @@ public class TeamController {
      * @return
      */
     @PostMapping("/list/my/join")
-    public BaseResponse<List<TeamUserVO>> getMyJoinTeamList(@RequestBody TeamQuery teamQuery, HttpServletRequest request) {
+    public BaseResponse<List<TeamUserVO>> getMyJoinTeamList(@RequestBody final TeamQuery teamQuery, final HttpServletRequest request) {
         if (teamQuery == null) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "请求参数为 null");
         }
@@ -158,8 +159,7 @@ public class TeamController {
         Set<Long> idLists = userTeamList.stream()
                 .collect(Collectors.groupingBy(UserTeam::getTeamId))
                 .keySet();
-        teamQuery.setListIds((new ArrayList<>(idLists)));
-        List<TeamUserVO> listList = teamService.listTeams(teamQuery, true);
+        List<TeamUserVO> listList = teamService.listTeams(teamQuery.changeIdLists(teamQuery, new ArrayList<>(idLists)), true);
         return ResultUtils.success(listList);
     }
 

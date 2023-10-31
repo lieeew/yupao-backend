@@ -28,15 +28,6 @@ class UserServiceTest {
     public void testAddUser() {
         User user = new User();
 
-        user.setUsername("yupi");
-        user.setUserAccount("123");
-        user.setAvatarUrl("https://pic.code-nav.cn/user_avatar/1608460212774109186/4LsPUAdz-photo_2023-04-09_16-26-40.jpg");
-        user.setGender(0);
-        user.setUserPassword("xxx");
-        user.setPhone("123");
-        user.setEmail("456");
-        user.setUserStatus(0);
-
         boolean result = userService.save(user);
         System.out.println(user.getId());
         // 断言测试

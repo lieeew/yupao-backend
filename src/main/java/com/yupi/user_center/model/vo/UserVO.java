@@ -1,7 +1,5 @@
 package com.yupi.user_center.model.vo;
 
-import com.baomidou.mybatisplus.annotation.*;
-
 import java.io.Serializable;
 import java.util.Date;
 

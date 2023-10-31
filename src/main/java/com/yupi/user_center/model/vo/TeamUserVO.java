@@ -1,5 +1,9 @@
 package com.yupi.user_center.model.vo;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -10,6 +14,9 @@ import java.util.List;
  * @Package com.yupi.user_center.model.vo
  * @Description team 的包装类（脱敏）
  */
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 public class TeamUserVO implements Serializable {
     private static final long serialVersionUID = -6539018889531025460L;
 
@@ -71,101 +78,5 @@ public class TeamUserVO implements Serializable {
      * 创建人用户信息
      */
     private UserVO creatUser;
-
-    public UserVO getCreatUser() {
-        return creatUser;
-    }
-
-    public void setCreatUser(UserVO creatUser) {
-        this.creatUser = creatUser;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Long getMemberCount() {
-        return memberCount;
-    }
-
-    public void setMemberCount(Long memberCount) {
-        this.memberCount = memberCount;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Integer getMaxNum() {
-        return maxNum;
-    }
-
-    public void setMaxNum(Integer maxNum) {
-        this.maxNum = maxNum;
-    }
-
-    public Date getExpireTime() {
-        return expireTime;
-    }
-
-    public void setExpireTime(Date expireTime) {
-        this.expireTime = expireTime;
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
-    public Integer getStatus() {
-        return status;
-    }
-
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    public List<UserVO> getUserList() {
-        return userList;
-    }
-
-    public void setUserList(List<UserVO> userList) {
-        this.userList = userList;
-    }
 
 }

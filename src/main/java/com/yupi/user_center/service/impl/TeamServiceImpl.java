@@ -1,6 +1,7 @@
 package com.yupi.user_center.service.impl;
 
 import java.util.Date;
+
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -30,9 +31,11 @@ import org.redisson.api.RedissonClient;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
+
 import javax.annotation.Resource;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 /**
  * @author leikooo
@@ -87,8 +90,6 @@ public class TeamServiceImpl extends ServiceImpl<TeamMapper, Team> implements Te
     }
 
     /**
-     *
-     *
      * @param userId
      * @param team
      * @return
@@ -155,90 +156,70 @@ public class TeamServiceImpl extends ServiceImpl<TeamMapper, Team> implements Te
      * @return
      */
     @Override
-    public List<TeamUserVO> listTeams(TeamQuery teamQuery, boolean isAdmin) {
-        QueryWrapper<Team> queryWrapper = new QueryWrapper<>();
-        Team team = new Team();
-        try {
-            BeanUtils.copyProperties(team, teamQuery);
-        } catch (Exception e) {
-            throw new BusinessException(ErrorCode.SYSTEM_ERROR);
+    public List<TeamUserVO> listTeams(final TeamQuery teamQuery, final boolean isAdmin) {
+        Page<Team> teamPageList = getSelectedTeam(teamQuery, isAdmin);
+        if (CollectionUtils.isEmpty(teamPageList.getRecords())) {
+            return new ArrayList<>();
         }
-        if (teamQuery != null) {
-            // 根据队伍 id 进行查询
-            Long id = teamQuery.getId();
-            if (id != null && id > 0) {
-                queryWrapper.eq("id", id);
-            }
-            // 根据 id 集合进行查询，多个队伍
-            List<Long> listIds = teamQuery.getListIds();
-            if (org.apache.commons.collections.CollectionUtils.isNotEmpty(listIds)) {
-                queryWrapper.in("id", listIds);
-            }
-            // 同时收缩 名称 + 描述
-            String searchText = teamQuery.getSearchText();
-            if (StringUtils.isNoneBlank(searchText)) {
-                // 使用 or 查询写法
-                queryWrapper.or(qw -> (qw.like("name", searchText)).or().like("description", searchText));
-            }
-            // 根据队名称进行查询
-            String name = teamQuery.getName();
-            if (StringUtils.isNoneBlank(name)) {
-                queryWrapper.like("name", name);
-            }
-            // 只是根据描述进行查询
-            String description = teamQuery.getDescription();
-            if (StringUtils.isNoneBlank(description)) {
-                queryWrapper.like("description", description);
-            }
-            // 根据最大人数进行查询
-            Integer maxNum = teamQuery.getMaxNum();
-            if (maxNum != null && maxNum > 0) {
-                queryWrapper.eq("maxNum", maxNum);
-            }
-            // 根据用户 id 进行查询
-            Long userId = teamQuery.getUserId();
-            if (userId != null && userId > 0) {
-                queryWrapper.eq("userId", userId);
-            }
-            // 不显示已经过期的队伍
-            // expireTime is null or expireTime > now()
-            queryWrapper.and(qw -> qw.gt("expireTime", new Date()).or().isNull("expireTime"));
-            // 根据状态进行查询,  这里需要限制只有 管理员才查看一些非公开的 Team
-            Integer status = teamQuery.getStatus();
-            if (status != null && status > -1) {
-                queryWrapper.eq("status", status);
-            }
-            if (!isAdmin && !TeamStatusEnum.PUBLIC.equals(TeamStatusEnum.getEnumByValue(status))) {
-                throw new BusinessException(ErrorCode.NO_AUTH);
-            }
+        return teamPageList.getRecords().stream().map((Team t) -> {
+                    // 查询到每一个组的 创建者的用户信息
+                    List<UserVO> creatUser = listTeamUserMapper.listTeamLeader(t.getUserId());
+                    // 查询到对应组的用户信息
+                    List<UserVO> teamUsers = listTeamUserMapper.listTeamUsers(t.getId());
+                    return new TeamUserVO(t.getId(), t.getName(), t.getDescription(), t.getMaxNum(), t.getExpireTime(), t.getUserId(), t.getMemberCount(), t.getStatus(), t.getCreateTime(), t.getUpdateTime(), teamUsers, creatUser.get(0));
+                }).collect(Collectors.toList());
+    }
 
-            // 得到符合要求的条件的队伍, 进行遍历
-            // List<Team> teamList = this.list(queryWrapper);
-            Page<Team> teamPageList = this.page(new Page<>(teamQuery.getCurrent(), teamQuery.getSize()), queryWrapper);
-            if (CollectionUtils.isEmpty(teamPageList.getRecords())) {
-                return new ArrayList<>();
-            }
-            List<TeamUserVO> teamUserVOList = new ArrayList<>();
-            for (Team t : teamPageList.getRecords()) {
-                TeamUserVO teamUserVO = new TeamUserVO();
-                // 查询到每一个组的 创建者的用户信息
-                List<UserVO> creatUser = listTeamUserMapper.listTeamLeader(t.getUserId());
-                // 查询到对应组的用户信息
-                List<UserVO> teamUsers = listTeamUserMapper.listTeamUsers(t.getId());
-                try {
-                    BeanUtils.copyProperties(teamUserVO, t);
-                } catch (Exception e) {
-                    throw new BusinessException(ErrorCode.SYSTEM_ERROR);
-                }
-                // 设置相关的信息
-                teamUserVO.setCreatUser(creatUser.get(0));
-                teamUserVO.setUserList(teamUsers);
-                // 添加到集合之中
-                teamUserVOList.add(teamUserVO);
-            }
-            return teamUserVOList;
+    private Page<Team> getSelectedTeam(final TeamQuery teamQuery, final boolean isAdmin) {
+        QueryWrapper<Team> queryWrapper = new QueryWrapper<>();
+        // 根据队伍 id 进行查询
+        Long id = teamQuery.getId();
+        if (id != null && id > 0) {
+            queryWrapper.eq("id", id);
         }
-        return new ArrayList<>();
+        // 根据 id 集合进行查询，多个队伍
+        List<Long> listIds = teamQuery.getListIds();
+        if (org.apache.commons.collections.CollectionUtils.isNotEmpty(listIds)) {
+            queryWrapper.in("id", listIds);
+        }
+        // 同时收缩 名称 + 描述
+        String searchText = teamQuery.getSearchText();
+        if (StringUtils.isNoneBlank(searchText)) {
+            // 使用 or 查询写法
+            queryWrapper.or(qw -> (qw.like("name", searchText)).or().like("description", searchText));
+        }
+        // 根据队名称进行查询
+        String name = teamQuery.getName();
+        if (StringUtils.isNoneBlank(name)) {
+            queryWrapper.like("name", name);
+        }
+        // 只是根据描述进行查询
+        String description = teamQuery.getDescription();
+        if (StringUtils.isNoneBlank(description)) {
+            queryWrapper.like("description", description);
+        }
+        // 根据最大人数进行查询
+        Integer maxNum = teamQuery.getMaxNum();
+        if (maxNum != null && maxNum > 0) {
+            queryWrapper.eq("maxNum", maxNum);
+        }
+        // 根据用户 id 进行查询
+        Long userId = teamQuery.getUserId();
+        if (userId != null && userId > 0) {
+            queryWrapper.eq("userId", userId);
+        }
+        // 不显示已经过期的队伍
+        // expireTime is null or expireTime > now()
+        queryWrapper.and(qw -> qw.gt("expireTime", new Date()).or().isNull("expireTime"));
+        // 根据状态进行查询,  这里需要限制只有 管理员才查看一些非公开的 Team
+        Integer status = teamQuery.getStatus();
+        if (status != null && status > -1) {
+            queryWrapper.eq("status", status);
+        }
+        if (!isAdmin && !TeamStatusEnum.PUBLIC.equals(TeamStatusEnum.getEnumByValue(status))) {
+            throw new BusinessException(ErrorCode.NO_AUTH);
+        }
+        return this.page(new Page<>(teamQuery.getPageNum(), teamQuery.getPageSize()), queryWrapper);
     }
 
     /**

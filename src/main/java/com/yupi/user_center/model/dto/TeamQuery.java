@@ -1,7 +1,7 @@
 package com.yupi.user_center.model.dto;
 
-import com.yupi.user_center.common.PageRequest;
-import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
@@ -15,14 +15,16 @@ import java.util.List;
  * 2） 有一些参数使用不到，可以降低理解成本
  * 3) 多个对象映射到类里面
  */
-public class TeamQuery extends PageRequest {
+@Getter
+@NoArgsConstructor
+public class TeamQuery {
     /**
      * id
      */
     private Long id;
 
     /**
-     *  需要查询的 id 序列
+     * 需要查询的 id 序列
      */
     private List<Long> listIds;
 
@@ -54,93 +56,47 @@ public class TeamQuery extends PageRequest {
      * 0 - 公开，1 - 私有，2 - 加密
      */
     private Integer status;
-    /**
-     * 当前页数
-     */
-    private int current = 1;
 
     /**
-     * 该页的显示的数量
+     * pageNum
      */
-    private int size = 10;
+    private int pageNum = 1;
 
-    public String getSearchText() {
-        return searchText;
-    }
+    /**
+     * pageSize
+     */
+    private int pageSize = 10;
 
-    public void setSearchText(String searchText) {
-        this.searchText = searchText;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
+    public TeamQuery(Long id, List<Long> listIds, String searchText, String name, String description, Integer maxNum, Long userId, Integer status, int pageNum, int pageSize) {
         this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Integer getMaxNum() {
-        return maxNum;
-    }
-
-    public void setMaxNum(Integer maxNum) {
-        this.maxNum = maxNum;
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
-    public Integer getStatus() {
-        return status;
-    }
-
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
-
-    public int getCurrent() {
-        return current;
-    }
-
-    public void setCurrent(int current) {
-        this.current = current;
-    }
-
-    public int getSize() {
-        return size;
-    }
-
-    public void setSize(int size) {
-        this.size = size;
-    }
-
-    public List<Long> getListIds() {
-        return listIds;
-    }
-
-    public void setListIds(List<Long> listIds) {
         this.listIds = listIds;
+        this.searchText = searchText;
+        this.name = name;
+        this.description = description;
+        this.maxNum = maxNum;
+        this.userId = userId;
+        this.status = status;
+        this.pageNum = pageNum;
+        this.pageSize = pageSize;
+    }
+
+    /**
+     * 修改 idLists
+     *
+     * @param originalObj
+     * @param listIds
+     * @return
+     */
+    public TeamQuery changeIdLists(final TeamQuery originalObj, final List<Long> listIds) {
+        return new TeamQuery(originalObj.getId(), listIds, originalObj.getSearchText(), originalObj.getName(), originalObj.getDescription(), originalObj.getMaxNum(), originalObj.getUserId(), originalObj.getStatus(), originalObj.getPageNum(), originalObj.getPageSize());
+    }
+
+    /**
+     * @param originalObj
+     * @param userId      队长 id
+     *                    * @return
+     */
+    public TeamQuery changeUserId(final TeamQuery originalObj, final Long userId) {
+        return new TeamQuery(originalObj.getId(), originalObj.getListIds(), originalObj.getSearchText(), originalObj.getName(), originalObj.getDescription(), originalObj.getMaxNum(), userId, originalObj.getStatus(), originalObj.getPageNum(), originalObj.getPageSize());
     }
 }

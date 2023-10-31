@@ -27,8 +27,6 @@ public class RedisTest {
         valueOperations.set("dog", "dog");
         valueOperations.set("leikooo", 21);
         User user = new User();
-        user.setId(0L);
-        user.setUsername("leikooo");
         valueOperations.set("user", user);
 
         // select

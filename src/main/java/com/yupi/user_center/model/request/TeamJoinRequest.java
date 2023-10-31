@@ -1,5 +1,9 @@
 package com.yupi.user_center.model.request;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
 import java.io.Serializable;
 /**
  * @author leikooo
@@ -7,6 +11,9 @@ import java.io.Serializable;
  * @Package com.yupi.user_center.model.request
  * @Description
  */
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 public class TeamJoinRequest implements Serializable {
     private static final long serialVersionUID = -4894468952406021507L;
 
@@ -20,19 +27,4 @@ public class TeamJoinRequest implements Serializable {
      */
     private String password;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
 }

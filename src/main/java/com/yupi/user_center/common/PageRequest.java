@@ -1,5 +1,9 @@
 package com.yupi.user_center.common;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
 import java.io.Serializable;
 
 /**
@@ -8,11 +12,11 @@ import java.io.Serializable;
  * @Package com.yupi.user_center.model.dto
  * @Description
  */
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 public class PageRequest implements Serializable {
-
     private static final long serialVersionUID = -7354124501767087987L;
-
-
     /**
      * 页面大小
      */
@@ -23,19 +27,4 @@ public class PageRequest implements Serializable {
      */
     protected int pageNum = 1;
 
-    public int getPageSize() {
-        return pageSize;
-    }
-
-    public void setPageSize(int pageSize) {
-        this.pageSize = pageSize;
-    }
-
-    public int getPageNum() {
-        return pageNum;
-    }
-
-    public void setPageNum(int pageNum) {
-        this.pageNum = pageNum;
-    }
 }

@@ -18,13 +18,13 @@ public interface ListTeamUserMapper extends BaseMapper<TeamMapper> {
      * @param userId
      * @return
      */
-    @Select("select u.* from yupao_backend.team t left join yupao_backend.user u on t.userId = u.id where u.id = #{userId}")
+    @Select("select u.* from yupi.team t left join yupi.user u on t.userId = u.id where u.id = #{userId}")
     List<UserVO> listTeamLeader(@Param("userId") Long userId);
 
     /**
      * 查询到对应每一个队伍的成员
      *
      */
-    @Select("select u.* from yupao_backend.team t left join yupao_backend.user_team ut on t.id = ut.teamId left join yupao_backend.user u on u.id = ut.userId where ut.teamId = #{teamId} and u.isDelete = 0 and ut.isDelete = 0 and t.isDelete = 0")
+    @Select("select u.* from yupi.team t left join yupi.user_team ut on t.id = ut.teamId left join yupi.user u on u.id = ut.userId where ut.teamId = #{teamId} and u.isDelete = 0 and ut.isDelete = 0 and t.isDelete = 0")
     List<UserVO> listTeamUsers(@Param("teamId") Long teamId);
 }

@@ -1,5 +1,9 @@
 package com.yupi.user_center.model.request;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
 import java.io.Serializable;
 
 /**
@@ -8,6 +12,9 @@ import java.io.Serializable;
  * @Package com.yupi.user_center.model.request
  * @Description 删除队伍传入的参数
  */
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 public class TeamRemoveRequest implements Serializable {
 
     private static final long serialVersionUID = -43284998019872033L;
@@ -17,11 +24,4 @@ public class TeamRemoveRequest implements Serializable {
      */
     private Long id;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 }
