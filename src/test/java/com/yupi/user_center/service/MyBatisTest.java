@@ -36,14 +36,6 @@ public class MyBatisTest {
                 "         left join `user` u on u.id = t.id\n" +
                 "where u.id = ?", 1);
         UserVO userVO = new UserVO();
-        userVO.setAvatarUrl((String) creatUser.getOrDefault("AVATARURL", "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"));
-        userVO.setId((Long) creatUser.get("USERID"));
-        userVO.setUserAccount((String) creatUser.get("USERACCOUNT"));
-        userVO.setGender((Integer) creatUser.get("GENDER"));
-        userVO.setEmail((String) creatUser.get("EMAIL"));
-        userVO.setPhone((String) creatUser.get("PHONE"));
-        userVO.setPlanetCode((String) creatUser.get("PLANETCODE"));
-        userVO.setTags((String) creatUser.get("TAGS"));
     }
 
     @Test

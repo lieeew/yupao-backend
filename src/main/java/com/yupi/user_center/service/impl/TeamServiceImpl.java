@@ -1,7 +1,5 @@
 package com.yupi.user_center.service.impl;
 
-import java.util.Date;
-
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -23,8 +21,8 @@ import com.yupi.user_center.model.vo.UserVO;
 import com.yupi.user_center.service.TeamService;
 import com.yupi.user_center.service.UserService;
 import com.yupi.user_center.service.UserTeamService;
+import com.yupi.user_center.utils.CopyUtils;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
@@ -250,12 +248,7 @@ public class TeamServiceImpl extends ServiceImpl<TeamMapper, Team> implements Te
                 throw new BusinessException(ErrorCode.PARAMS_ERROR, "私密房间需要设置密码");
             }
         }
-        Team team = new Team();
-        try {
-            BeanUtils.copyProperties(team, teamUpdateRequest);
-        } catch (Exception e) {
-            throw new BusinessException(ErrorCode.SYSTEM_ERROR);
-        }
+        Team team = CopyUtils.getInformation(teamUpdateRequest);
         return this.updateById(team);
     }
 

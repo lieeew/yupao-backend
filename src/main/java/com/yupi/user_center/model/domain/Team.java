@@ -111,14 +111,4 @@ public class Team implements Serializable {
     public Team changeMemberCount(final Team oldTeam, final long count) {
         return new Team(oldTeam.getId(), oldTeam.getName(), oldTeam.getDescription(), oldTeam.getMaxNum(), oldTeam.getExpireTime(), oldTeam.getUserId(), oldTeam.getStatus(), oldTeam.getPassword(), oldTeam.getCreateTime(), oldTeam.getUpdateTime(), count, oldTeam.getIsDelete());
     }
-
-    public static Team getInfoFromTeamQuery(final TeamQuery teamQuery) {
-        Team team = new Team();
-        try {
-            BeanUtils.copyProperties(team, teamQuery);
-        } catch (Exception e) {
-            throw new BusinessException(ErrorCode.SYSTEM_ERROR);
-        }
-        return team;
-    }
 }
