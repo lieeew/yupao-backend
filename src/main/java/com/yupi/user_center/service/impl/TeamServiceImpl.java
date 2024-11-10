@@ -164,7 +164,7 @@ public class TeamServiceImpl extends ServiceImpl<TeamMapper, Team> implements Te
                     List<UserVO> creatUser = listTeamUserMapper.listTeamLeader(t.getUserId());
                     // 查询到对应组的用户信息
                     List<UserVO> teamUsers = listTeamUserMapper.listTeamUsers(t.getId());
-                    return new TeamUserVO(t.getId(), t.getName(), t.getDescription(), t.getMaxNum(), t.getExpireTime(), t.getUserId(), t.getMemberCount(), t.getStatus(), t.getCreateTime(), t.getUpdateTime(), teamUsers, creatUser.get(0));
+                    return new TeamUserVO(t.getId().toString(), t.getName(), t.getDescription(), t.getMaxNum(), t.getExpireTime(), t.getUserId(), t.getMemberCount(), t.getStatus(), t.getCreateTime(), t.getUpdateTime(), teamUsers, creatUser.get(0));
                 }).collect(Collectors.toList());
     }
 

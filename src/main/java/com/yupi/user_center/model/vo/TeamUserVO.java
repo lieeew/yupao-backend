@@ -23,7 +23,7 @@ public class TeamUserVO implements Serializable {
     /**
      * id
      */
-    private Long id;
+    private String id;
 
     /**
      * 队伍名称
